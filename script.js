@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            outputElement.textContent = "// Nexora AI is thinking...";
+            outputElement.textContfent = "// Nexora AI is thinking...";
 
             try {
 
-                const apiKey = AQ.Ab8RN6Kcgn0B3OKowZNpzvv7EOB8eHgkAr6D8oP727EtIYNJTA
+                const apiKey = AQ.Ab8RN6K6n8SiU4yvwIkV5QPslXWQbPqs4TV1jdYeHHiTKrlrSg
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: "POST",
