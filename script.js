@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
             outputElement.textContent = "// Nexora AI is thinking...";
 
             try {
-                // ⚠️ PASTE YOUR REAL GOOGLE API KEY INSIDE THE QUOTES BELOW ⚠️
-                const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+
+                const apiKey = AQ.Ab8RN6Kcgn0B3OKowZNpzvv7EOB8eHgkAr6D8oP727EtIYNJTA
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: "POST",
