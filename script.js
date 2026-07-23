@@ -16,7 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 // 1. YOUR API KEY
-                const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+                const apiKey = # ❌ DON'T DO THIS (Hardcoding):
+# api_key = "sk-proj-xxxxxxxxxxxx"
+
+# ✅ DO THIS INSTEAD (Environment Variable):
+import os
+
+api_key = os.environ.get("OPENAI_API_KEY")
+
 
                 // 2. FETCH REQUEST
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
