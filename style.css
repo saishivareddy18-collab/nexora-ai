@@ -1,0 +1,73 @@
+/* 1. Global Box Sizing & Mobile Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; /* Prevents side scrolling */
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+/* 2. Container Layouts (Vertical Column Setup) */
+.hero, .features, .why-choose, .login-container, footer {
+  display: flex;
+  flex-direction: column; /* Force straight vertical column */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 15px;
+}
+
+/* 3. Login Card Styling */
+.login-card {
+  width: 100%;
+  max-width: 360px; /* Limits width so it fits mobile screens nicely */
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px auto;
+}
+
+/* 4. Form Inputs & Buttons */
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.btn-login, .btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #00ff7f;
+  color: #000;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Uncluttered List Styles */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 8px 0;
+}
