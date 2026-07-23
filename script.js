@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
             outputElement.textContfent = "// Nexora AI is thinking...";
 
             try {
+// MUST have quotes around the key!
+const apiKey = "AIzaSyYourActualKeyHere";
 
                 const apiKey = AQ.Ab8RN6K6n8SiU4yvwIkV5QPslXWQbPqs4TV1jdYeHHiTKrlrSg
 
