@@ -15,8 +15,45 @@ document.addEventListener("DOMContentLoaded", () => {
             outputElement.textContent = "// Nexora AI is generating your response...";
 
             try {
-                // 1. YOUR API KEY
-                const apiKey = # ❌ DON'T DO THIS (Hardcoding):
+               document.addEventListener("DOMContentLoaded", () => {
+  const askBtn = document.getElementById("askBtn");
+  const promptInput = document.getElementById("userPrompt");
+  const outputElement = document.getElementById("outputContent");
+
+  if (askBtn) {
+    askBtn.addEventListener("click", async () => {
+      const userPrompt = promptInput.value.trim();
+
+      if (!userPrompt) {
+        alert("Please enter a question!");
+        return;
+      }
+
+      outputElement.textContent = "// Nexora AI is generating...";
+
+      try {
+        // Send request to your Python backend (Replace with your live backend URL)
+        const response = await fetch("https://your-backend-url.onrender.com/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: userPrompt
+          })
+        });
+
+        const data = await response.json();
+        outputElement.textContent = data.reply;
+
+      } catch (error) {
+        outputElement.textContent = "Error: Unable to connect to backend.";
+      }
+    });
+  }
+});
+ 
+                # ❌ DON'T DO THIS (Hardcoding):
 # api_key = "sk-proj-xxxxxxxxxxxx"
 
 # ✅ DO THIS INSTEAD (Environment Variable):
