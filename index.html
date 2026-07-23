@@ -28,12 +28,13 @@
       <p>Ask complex algorithms, debug code, or request instant explanations.</p>
     </div>
 
-    <section class="ai-card">
+      <section class="ai-card">
       <div class="input-group">
-        <textarea id="userPrompt" placeholder="Ask a coding or DSA question (e.g., Explain Binary Search)..."></textarea>
-        <button id="askBtn" onclick="askNexora()">
+        <textarea id="userPrompt" placeholder="Ask a coding or DSA question..."></textarea>
+        
+        <button id="askBtn">
           <span>Ask AI</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </div>
 
@@ -41,16 +42,10 @@
         <div class="code-header">
           <span>Output</span>
         </div>
-        <pre><code id="outputCode" class="language-javascript">// AI response will appear here...
-function greetUser(name) {
-    console.log("Welcome to Nexora AI, " + name + "!");
-}
-greetUser("Developer");</code></pre>
+        <pre><code id="outputCode" class="language-javascript">// AI response will appear here...</code></pre>
       </div>
     </section>
-  </main>
 
-  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <p>&copy; 2026 Nexora AI. All rights reserved.</p>
