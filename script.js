@@ -216,7 +216,58 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     outputElement.textContent = "// Nexora AI is generating your response...";
+document.addEventListener("DOMContentLoaded", () => {
+    const askBtn = document.getElementById("askBtn");
+    const promptInput = document.getElementById("userPrompt");
+    const outputElement = document.getElementById("outputCode");
 
+    if (askBtn) {
+        askBtn.addEventListener("click", async () => {
+            const userPrompt = promptInput.value.trim();
+
+            if (!userPrompt) {
+                alert("Please enter a question!");
+                return;
+            }
+
+            outputElement.textContent = "// Nexora AI is generating your response...";
+
+            try {
+                // Replace with your actual key from Google AI Studio
+                const apiKey = "YOUR_GEMINI_API_KEY_HERE";
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `You are Nexora AI, an expert coding assistant. Provide a concise explanation with clean code for: ${userPrompt}`
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    const aiReply = data.candidates[0].content.parts[0].text;
+                    outputElement.textContent = aiReply;
+
+                    if (window.Prism) {
+                        Prism.highlightElement(outputElement);
+                    }
+                } else {
+                    outputElement.textContent = "// Error: Unable to fetch response. Check API key.";
+                }
+
+            } catch (error) {
+                outputElement.textContent = "// Error connecting to AI. Please check your connection or API key.";
+                console.error("API Error:", error);
+            }
+        });
+    }
+}
     try {
         // Replace with your actual key from Google AI Studio
         const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
