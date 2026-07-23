@@ -205,7 +205,55 @@ document.addEventListener("DOMContentLoaded", () => {
   width: 100%;
   max-width: 400px; /* Optional max constraint */
   margin: 10px 0;
+}async function askNexora() {
+    const promptInput = document.getElementById("userPrompt");
+    const outputElement = document.getElementById("outputCode");
+    const userPrompt = promptInput.value.trim();
+    
+    if (!userPrompt) {
+        alert("Please enter a question!");
+        return;
+    }
+
+    outputElement.textContent = "// Nexora AI is generating your response...";
+
+    try {
+        // Replace with your actual key from Google AI Studio
+        const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+        
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify({
+                contents: [{ 
+                    parts: [{ 
+                        text: `You are Nexora AI, an expert coding and DSA assistant. Provide a concise explanation with clean code for this prompt: ${userPrompt}` 
+                    }] 
+                }]
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            const aiReply = data.candidates[0].content.parts[0].text;
+            outputElement.textContent = aiReply;
+            
+            if (window.Prism) {
+                Prism.highlightElement(outputElement);
+            }
+        } else {
+            outputElement.textContent = "// Error: Could not retrieve response from AI.";
+        }
+
+    } catch (error) {
+        outputElement.textContent = "// Error connecting to AI assistant. Check network or API key.";
+        console.error("API Error:", error);
+    }
 }
+
 // Put this inside script.js (NOT index.html)
 const btn = document.getElementById("myBtn");
 if (btn) {
