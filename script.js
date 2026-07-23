@@ -12,22 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            outputElement.textContfent = "// Nexora AI is thinking...";
+            outputElement.textContent = "// Nexora AI is generating your response...";
 
             try {
-// MUST have quotes around the key!
-const apiKey = "AIzaSyYourActualKeyHere";
+                // 1. YOUR API KEY
+                const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
 
-                const apiKey = AQ.Ab8RN6K6n8SiU4yvwIkV5QPslXWQbPqs4TV1jdYeHHiTKrlrSg
-
+                // 2. FETCH REQUEST
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json" 
+                    },
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: `You are Nexora AI, a helpful coding assistant. Answer this query concisely with clean code: ${userPrompt}`
+                                text: `You are Nexora AI, an expert coding assistant. Answer: ${userPrompt}`
                             }]
                         }]
                     })
@@ -41,14 +41,14 @@ const apiKey = "AIzaSyYourActualKeyHere";
                         Prism.highlightElement(outputElement);
                     }
                 } else if (data.error) {
-                    outputElement.textContent = `// API Error: ${data.error.message}`;
+                    outputElement.textContent = `// Google API Error (${data.error.code}): ${data.error.message}`;
                 } else {
-                    outputElement.textContent = "// Error: Unexpected response format from AI.";
+                    outputElement.textContent = "// Error: Unexpected response format.";
                 }
 
             } catch (error) {
-                outputElement.textContent = "// Connection error. Please check your internet or API key.";
-                console.error("API Error:", error);
+                // Displays the real browser error on screen
+                outputElement.textContent = `// Browser / Network Error: ${error.message}`;
             }
         });
     }
