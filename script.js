@@ -97,3 +97,34 @@ api_key = os.environ.get("OPENAI_API_KEY")
         });
     }
 });
+from fastapi import FastAPI
+from pydantic import BaseModel
+from openai import OpenAI
+import os
+
+app = FastAPI()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    response = client.chat.completions.create(
+        model="gpt-5.5",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are Nexora AI, a professional AI assistant that helps with coding, writing, math, business, translations, and general questions."
+            },
+            {
+                "role": "user",
+                "content": request.message
+            }
+        ]
+    )
+
+    return {
+        "reply": response.choices[0].message.content
+    }
