@@ -12,35 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            outputElement.textContent = "// Nexora AI is generating your response...";
+            outputElement.textContent = "// Nexora AI is thinking...";
 
             try {
-                // ⚠️ PASTE YOUR ACTUAL API KEY HERE ⚠️
-                const apiKey = curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent" \
-  -H 'Content-Type: application/json' \
-  -H 'X-goog-api-key: AQ.Ab8RN6Kcgn0B3OKowZNpzvv7EOB8eHgkAr6D8oP727EtIYNJTA' \
-  -X POST \
-  -d '{
-    "contents": [
-      {
-        "parts": [
-          {
-            "text": "Explain how AI works in a few words"
-          }
-        ]
-      }
-    ]
-  }' 
+                // ⚠️ PASTE YOUR REAL GOOGLE API KEY INSIDE THE QUOTES BELOW ⚠️
+                const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
 
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json" 
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: `You are Nexora AI, an expert developer assistant. Answer this query clearly with code: ${userPrompt}`
+                                text: `You are Nexora AI, a helpful coding assistant. Answer this query concisely with clean code: ${userPrompt}`
                             }]
                         }]
                     })
@@ -56,12 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (data.error) {
                     outputElement.textContent = `// API Error: ${data.error.message}`;
                 } else {
-                    outputElement.textContent = "// Error: Unexpected response format.";
+                    outputElement.textContent = "// Error: Unexpected response format from AI.";
                 }
 
             } catch (error) {
-                outputElement.textContent = "// Connection Error: Check internet connection or API Key.";
-                console.error("API Fetch Error:", error);
+                outputElement.textContent = "// Connection error. Please check your internet or API key.";
+                console.error("API Error:", error);
             }
         });
     }
