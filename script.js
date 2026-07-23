@@ -16,7 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 // ⚠️ PASTE YOUR ACTUAL API KEY HERE ⚠️
-                const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
+                const apiKey = curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent" \
+  -H 'Content-Type: application/json' \
+  -H 'X-goog-api-key: AQ.Ab8RN6Kcgn0B3OKowZNpzvv7EOB8eHgkAr6D8oP727EtIYNJTA' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works in a few words"
+          }
+        ]
+      }
+    ]
+  }' 
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: "POST",
