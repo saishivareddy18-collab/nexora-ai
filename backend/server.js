@@ -1,77 +1,44 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import OpenAI from "openai";
-
-dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const app = express();
+const PORT = process.env.PORT || 10000;
 
+// Enable CORS so your GitHub Pages frontend can access this endpoint
 app.use(cors());
 app.use(express.json());
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+// Initialize Gemini API
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.send('Nexora AI Backend is running!');
 });
 
-// Home Route
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "🚀 Nexora AI Backend is Running",
-    version: "1.0.0"
-  });
-});
-
-// Health Check
-app.get("/health", (req, res) => {
-  res.json({
-    status: "ok",
-    uptime: process.uptime()
-  });
-});
-
-// AI Chat Route
-app.post("/chat", async (req, res) => {
+// Chat / Evaluation endpoint
+app.post('/api/chat', async (req, res) => {
   try {
     const { message } = req.body;
 
     if (!message) {
-      return res.status(400).json({
-        success: false,
-        error: "Message is required"
-      });
+      return res.status(400).json({ success: false, error: 'Message payload is required.' });
     }
 
-    const response = await client.responses.create({
-      model: "gpt-4.1-mini",
-      input: message
-    });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const result = await model.generateContent(message);
+    const response = await result.response;
+    const text = response.text();
 
-    res.json({
-      success: true,
-      reply: response.output_text
-    });
-
+    return res.json({ success: true, data: text });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      error: "Failed to generate AI response"
-    });
+    console.error('AI Processing Error:', error);
+    return res.status(500).json({ success: false, error: 'Failed to process prompt with AI.' });
   }
 });
 
-// 404 Route
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    error: "Route not found"
-  });
-});
-
-const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-  console.log(`🚀 Nexora AI Server running on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
+
