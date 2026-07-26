@@ -149,3 +149,79 @@ async def chat(request: ChatRequest):
     }
   }
 </script>
+// Configuration
+const API_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
+
+// DOM Elements
+const evaluateBtn = document.getElementById("evaluate-btn"); // Replace with your button ID
+const codeInput = document.getElementById("code-input");     // Replace with your code/text area ID
+const resultContainer = document.getElementById("result");   // Replace with your output container ID
+
+/**
+ * Sends code or user message to Nexora AI backend and returns the evaluation response.
+ * @param {string} userMessage - The code string or prompt to send.
+ * @returns {Promise<string|null>} The AI response text or null if failed.
+ */
+async function sendChatMessage(userMessage) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: userMessage }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      return data.data;
+    } else {
+      console.error("API Error:", data.error || "Failed to process request.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Network Error:", error.message);
+    return null;
+  }
+}
+
+/**
+ * Handles the click event for evaluating code with Nexora AI.
+ */
+async function handleEvaluation() {
+  const userCode = codeInput ? codeInput.value.trim() : "";
+
+  if (!userCode) {
+    alert("Please enter or write your code before submitting!");
+    return;
+  }
+
+  // Update UI state to loading
+  if (evaluateBtn) evaluateBtn.disabled = true;
+  if (resultContainer) resultContainer.textContent = "Evaluating code with Nexora AI...";
+
+  // Call API
+  const aiResponse = await sendChatMessage(userCode);
+
+  // Update UI with response
+  if (resultContainer) {
+    if (aiResponse) {
+      resultContainer.textContent = aiResponse;
+    } else {
+      resultContainer.textContent = "An error occurred while evaluating your code. Please try again.";
+    }
+  }
+
+  // Restore button state
+  if (evaluateBtn) evaluateBtn.disabled = false;
+}
+
+// Event Listeners
+if (evaluateBtn) {
+  evaluateBtn.addEventListener("click", handleEvaluation);
+}
