@@ -245,3 +245,34 @@ footer {
     transform: translateY(0);
   }
 }
+#evaluation-result {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #1a1d24;
+  color: #e2e8f0;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* Style code snippets inside AI evaluation */
+#evaluation-result pre {
+  background-color: #0d1117;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#evaluation-result code {
+  background-color: #2d3748;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+#evaluation-result pre code {
+  background-color: transparent;
+  padding: 0;
+}
