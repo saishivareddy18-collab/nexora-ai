@@ -225,3 +225,65 @@ async function handleEvaluation() {
 if (evaluateBtn) {
   evaluateBtn.addEventListener("click", handleEvaluation);
 }
+const API_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
+
+async function sendChatMessage(userMessage) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    const data = await response.json();
+
+    return data.success ? data.data : null;
+  } catch (error) {
+    console.error("Network Error:", error.message);
+    return null;
+  }
+}
+
+async function handleEvaluation() {
+  const btn = document.querySelector(".evaluate-btn") || document.getElementById("evaluate-btn");
+  const codeArea = document.querySelector("textarea") || document.getElementById("code-input");
+  let outputBox = document.getElementById("evaluation-result");
+
+  // Create output container if it doesn't exist
+  if (!outputBox) {
+    outputBox = document.createElement("div");
+    outputBox.id = "evaluation-result";
+    btn.parentNode.appendChild(outputBox);
+  }
+
+  const userCode = codeArea ? codeArea.value.trim() : "";
+
+  // Visual loading state with CSS spinner
+  btn.disabled = true;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = `<span class="spinner"></span> Evaluating...`;
+  
+  outputBox.classList.remove("fade-in"); // Reset animation
+
+  const aiResult = await sendChatMessage(userCode);
+
+  // Restore button state
+  btn.disabled = false;
+  btn.innerHTML = originalText;
+
+  // Render output with animation
+  if (aiResult) {
+    outputBox.className = "result-card success fade-in";
+    outputBox.innerText = aiResult;
+  } else {
+    outputBox.className = "result-card error fade-in";
+    outputBox.innerText = "⚠️ Failed to evaluate code. Please check your backend or try again.";
+  }
+}
+
+// Attach listener
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".evaluate-btn") || document.getElementById("evaluate-btn");
+  if (btn) btn.addEventListener("click", handleEvaluation);
+});
