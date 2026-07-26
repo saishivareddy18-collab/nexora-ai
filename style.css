@@ -35,7 +35,7 @@
 body {
   font-family: var(--font-system);
   background-color: var(--bg-primary);
-  /* Apple/Google Aesthetic: Soft Radial Lighting Glows in the Background */
+  /* Soft Ambient Radial Glows */
   background-image: 
     radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
@@ -46,6 +46,44 @@ body {
   -webkit-font-smoothing: antialiased;
   padding: 24px 16px;
   min-height: 100vh;
+}
+
+/* Container & Navbar Layout */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto 32px auto;
+  padding: 12px 0;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.logo span {
+  color: var(--accent-green);
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Glassmorphism Cards */
@@ -68,6 +106,16 @@ body {
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
 }
 
+.card-header, .problem-header {
+  margin-bottom: 16px;
+}
+
+.title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* Typography Elements */
 h1, h2, h3 {
   font-weight: 600;
@@ -84,6 +132,13 @@ p {
   color: var(--text-muted);
   font-size: 0.95rem;
   margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 8px;
 }
 
 /* Code Editor / Inputs */
@@ -141,9 +196,28 @@ button:disabled {
   transform: none;
 }
 
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
 /* AI Output Response Area */
-#evaluation-result, .ai-output-box {
+.output-wrapper {
   margin-top: 20px;
+}
+
+.output-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+#evaluation-result, .ai-output-box {
+  margin-top: 8px;
   padding: 18px;
   background: rgba(15, 15, 18, 0.8);
   border-radius: var(--radius-md);
@@ -167,7 +241,7 @@ pre code {
   margin: 12px 0;
 }
 
-/* Status Tags (e.g., Easy/Medium/Hard) */
+/* Status Tags */
 .badge-easy {
   background: rgba(16, 185, 129, 0.15);
   color: #34d399;
@@ -176,4 +250,27 @@ pre code {
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+/* Footer */
+.footer {
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: 16px;
+}
+
+.footer-links a:hover {
+  color: #fff;
 }
