@@ -128,3 +128,24 @@ async def chat(request: ChatRequest):
     return {
         "reply": response.choices[0].message.content
     }
+<script>
+  async function evaluateWithAI(userCode) {
+    try {
+      const response = await fetch("https://nexora-ai-backend-k2rr.onrender.com/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: `Evaluate this solution for Reverse a String: ${userCode}` })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        console.log("AI Response:", data.data);
+        // Render data.data into your feedback box
+      }
+    } catch (error) {
+      console.error("Error connecting to server:", error);
+    }
+  }
+</script>
