@@ -287,3 +287,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn = document.querySelector(".evaluate-btn") || document.getElementById("evaluate-btn");
   if (btn) btn.addEventListener("click", handleEvaluation);
 });
+// Ensure this matches your Render backend URL exactly
+const API_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
+
+async function sendChatMessage(userMessage) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    const data = await response.json();
+
+    return data.success ? data.data : null;
+  } catch (error) {
+    console.error("Network Error:", error.message);
+    return null;
+  }
+}
