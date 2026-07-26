@@ -378,3 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn = document.querySelector("button");
   if (btn) btn.addEventListener("click", handleEvaluation);
 });
+  if (aiResult) {
+    // Renders formatted markdown (bold, lists, code blocks, headers)
+    outputBox.innerHTML = typeof marked !== 'undefined' ? marked.parse(aiResult) : aiResult;
+  }
