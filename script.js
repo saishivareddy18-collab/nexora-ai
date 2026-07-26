@@ -307,3 +307,74 @@ async function sendChatMessage(userMessage) {
     return null;
   }
 }
+// Live Render Backend Endpoint
+const API_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
+
+async function sendChatMessage(userMessage) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    const data = await response.json();
+
+    return data.success ? data.data : null;
+  } catch (error) {
+    console.error("Network Error:", error.message);
+    return null;
+  }
+}
+
+// Event handler for "Evaluate with Nexora AI" button
+async function handleEvaluation() {
+  const btn = document.querySelector("button");
+  const codeArea = document.querySelector("textarea");
+  let outputBox = document.getElementById("evaluation-result");
+
+  // Create an output container if one doesn't exist yet
+  if (!outputBox) {
+    outputBox = document.createElement("div");
+    outputBox.id = "evaluation-result";
+    outputBox.style.cssText = "margin-top: 15px; padding: 15px; background: #1a1d24; color: #fff; border-radius: 8px; white-space: pre-wrap;";
+    btn.parentNode.appendChild(outputBox);
+  }
+
+  // Get problem prompt + user code from text area
+  const userCode = codeArea ? codeArea.value.trim() : "";
+  const problemTitle = document.querySelector("h2") ? document.querySelector("h2").innerText : "Problem";
+
+  if (!userCode) {
+    alert("Please write your solution code first!");
+    return;
+  }
+
+  // UI Loading State
+  btn.disabled = true;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = "Evaluating with Nexora AI...";
+  outputBox.innerText = "Analyzing your code solution...";
+
+  // Combine problem title + code to give full context to Gemini AI
+  const promptPayload = `Problem: ${problemTitle}\n\nUser Solution Code:\n${userCode}\n\nPlease evaluate this code for correctness, time complexity, and edge cases.`;
+
+  const aiResult = await sendChatMessage(promptPayload);
+
+  // Restore Button & Show Output
+  btn.disabled = false;
+  btn.innerHTML = originalText;
+
+  if (aiResult) {
+    outputBox.innerText = aiResult;
+  } else {
+    outputBox.innerText = "⚠️ Failed to evaluate code. Check backend status or try again.";
+  }
+}
+
+// Attach click listener
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector("button");
+  if (btn) btn.addEventListener("click", handleEvaluation);
+});
