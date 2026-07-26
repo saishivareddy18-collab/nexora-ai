@@ -191,3 +191,57 @@ footer {
 .footer-links a:hover {
   color: #00e676;
 }
+/* Spinner Animation inside the button */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth Fade-In and Slide-Up Animation for Results */
+.result-card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #1a1d24;
+  color: #e2e8f0;
+  font-family: monospace;
+  white-space: pre-wrap;
+  border: 1px solid #2d3748;
+}
+
+.result-card.success {
+  border-left: 4px solid #10b981;
+}
+
+.result-card.error {
+  border-left: 4px solid #ef4444;
+  color: #fca5a5;
+}
+
+.fade-in {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
