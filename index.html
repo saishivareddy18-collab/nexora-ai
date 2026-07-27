@@ -1,395 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora AI - Smart Assistant for Developers</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora AI — Coding & DSA Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="navbar">
-    <div class="logo">Nexora<span>.ai</span></div>
-    <div class="status-badge"><span class="dot"></span> Online</div>
-  </header>
-
-  <!-- Playground -->
-  <main class="main-container">
-    <div class="hero">
-      <h1>AI-Powered Coding & DSA Assistant</h1>
-      <p>Ask complex algorithms, debug code, or request instant explanations.</p>
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="brand-mark">&gt;_</span>
+      <span class="brand-name">nexora<span class="brand-dot">.ai</span></span>
     </div>
+    <div class="nav-links">
+      <a href="#problems">Problems</a>
+      <a href="#chat">Ask AI</a>
+      <a href="#about">About</a>
+    </div>
+    <a href="#chat" class="nav-cta">Launch</a>
+  </div>
+</nav>
 
-    <section class="ai-card">
-      <div class="input-group">
-        <textarea id="userPrompt" placeholder="Ask a coding or DSA question..."></textarea>
-        <button id="askBtn">
-          <span>Ask AI</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
-      </div>
-
-      <div class="response-wrapper">
-        <div class="code-header">
-          <span>Output</span>
-        </div>
-        <pre><code id="outputCode" class="language-javascript">// AI response will appear here...</code></pre>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <p>&copy; 2026 Nexora AI. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="mailto:support@nexoraai.com">Support</a>
-        <a href="#">Instagram</a>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">// status: online</p>
+      <h1 class="hero-title">
+        <span class="line" data-line="1">Debug faster.</span>
+        <span class="line" data-line="2">Think in algorithms.</span>
+        <span class="line accent" data-line="3">Ship with confidence<span class="cursor">▌</span></span>
+      </h1>
+      <p class="hero-sub">Nexora is an AI coding partner built for developers who live in data structures and algorithms — explain a solution, debug a stack trace, or drill a fresh problem, in seconds.</p>
+      <div class="hero-actions">
+        <a href="#chat" class="btn btn-primary">Ask AI something</a>
+        <a href="#problems" class="btn btn-ghost">Browse problems</a>
       </div>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora.ai - DSA Problem Platform</title>
-  <style>
-    :root {
-      --bg-dark: #0d1117;
-      --card-bg: #161b22;
-      --border-color: #30363d;
-      --accent-green: #238636;
-      --accent-green-hover: #2ea043;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-primary);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-    }
-    .logo span { color: #2ea043; }
-
-    /* Navigation Tabs */
-    .tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
-    }
-
-    .tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 6px;
-    }
-
-    .tab-btn.active {
-      background: var(--card-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-
-    /* Cards and Forms */
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      background: var(--bg-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-primary);
-      padding: 10px;
-      font-size: 14px;
-      box-sizing: border-box;
-      margin-bottom: 16px;
-      font-family: inherit;
-    }
-
-    textarea.code-editor {
-      font-family: 'Courier New', Courier, monospace;
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .btn {
-      background-color: var(--accent-green);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn:hover {
-      background-color: var(--accent-green-hover);
-    }
-
-    /* Problem Card Styles */
-    .problem-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .badge {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-    }
-    .badge.Easy { background: rgba(46, 160, 67, 0.2); color: #3fb950; }
-    .badge.Medium { background: rgba(210, 153, 34, 0.2); color: #d29922; }
-    .badge.Hard { background: rgba(248, 81, 73, 0.2); color: #f85149; }
-
-    /* AI Response Box */
-    .ai-response {
-      margin-top: 16px;
-      padding: 14px;
-      background: #0d1117;
-      border-left: 4px solid var(--accent-green-hover);
-      border-radius: 6px;
-      display: none;
-      white-space: pre-wrap;
-      font-size: 14px;
-    }
-  </style>
-</head>
-<body>
-
-<div class="container">
-  <div class="header">
-    <div class="logo">Nexora<span>.ai</span></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('solve')">Solve Problems</button>
-    <button class="tab-btn" onclick="switchTab('add')">+ Add New Problem</button>
-  </div>
-
-  <!-- TAB 1: SOLVE DSA PROBLEMS -->
-  <div id="solve-section">
-    <div id="problem-list">
-      <!-- Dynamic DSA Problems will be injected here -->
+    <div class="hero-terminal">
+      <div class="terminal-bar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="terminal-title">nexora — session</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="term-line"><span class="prompt">&gt;</span> explain quicksort time complexity</div>
+        <div class="term-line term-response">Average case O(n log n), worst case O(n²) on already-sorted input with a poor pivot choice. Use median-of-three to avoid it.</div>
+        <div class="term-line"><span class="prompt">&gt;</span> <span class="typing-cursor">▌</span></div>
+      </div>
     </div>
   </div>
+</header>
 
-  <!-- TAB 2: ADD NEW DSA PROBLEM -->
-  <div id="add-section" style="display: none;">
-    <div class="card">
-      <h2>Add a New DSA Problem</h2>
-      <form id="add-problem-form">
-        <label>Problem Title</label>
-        <input type="text" id="title" placeholder="e.g. Two Sum" required>
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">120+</span><span class="stat-label">DSA problems</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-label">difficulty tiers</span></div>
+    <div class="stat"><span class="stat-num">&lt;2s</span><span class="stat-label">avg. response</span></div>
+  </div>
+</section>
 
-        <label>Difficulty</label>
-        <select id="difficulty">
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
+<section class="problems" id="problems">
+  <div class="section-head">
+    <p class="eyebrow">// solve_problems.js</p>
+    <h2>Practice on real problems</h2>
+    <p class="section-sub">Pick a difficulty, read the brief, run your solution against the starter template.</p>
+  </div>
+
+  <div class="problem-tabs">
+    <button class="tab active" data-filter="all">All</button>
+    <button class="tab" data-filter="easy">Easy</button>
+    <button class="tab" data-filter="medium">Medium</button>
+    <button class="tab" data-filter="hard">Hard</button>
+  </div>
+
+  <div class="problem-grid" id="problemGrid">
+    <!-- Cards injected by script.js -->
+  </div>
+
+  <button class="btn btn-outline add-problem-btn" id="addProblemBtn">+ Add new problem</button>
+</section>
+
+<section class="chat" id="chat">
+  <div class="chat-panel">
+    <div class="chat-header">
+      <span class="chat-header-title">Ask Nexora</span>
+      <span class="chat-status" id="chatStatus"><span class="status-dot"></span>Online</span>
+    </div>
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-msg chat-msg-ai">
+        Ask me to explain an algorithm, debug a snippet, or walk through a DSA problem.
+      </div>
+    </div>
+    <form class="chat-input-row" id="chatForm">
+      <input type="text" id="chatInput" placeholder="e.g. Why is my binary search off by one?" autocomplete="off">
+      <button type="submit" class="btn btn-primary chat-send">Send</button>
+    </form>
+  </div>
+</section>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Add a new problem</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <form id="problemForm">
+      <label>Problem title
+        <input type="text" id="pTitle" required placeholder="e.g. Longest Palindromic Substring">
+      </label>
+      <label>Difficulty
+        <select id="pDifficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
         </select>
-
-        <label>Problem Description</label>
-        <textarea id="description" rows="4" placeholder="Describe the constraints, inputs, and outputs..." required></textarea>
-
-        <label>Starter Code Template</label>
-        <textarea id="starterCode" class="code-editor" placeholder="function solve(arr, target) {\n  // Write code here\n}"></textarea>
-
-        <button type="submit" class="btn">Add Problem</button>
-      </form>
-    </div>
+      </label>
+      <label>Description
+        <textarea id="pDescription" rows="3" required placeholder="Problem statement..."></textarea>
+      </label>
+      <label>Starter code template
+        <textarea id="pStarter" rows="4" class="mono" placeholder="function solve(input) {&#10;  // your code&#10;}"></textarea>
+      </label>
+      <button type="submit" class="btn btn-primary">Add problem</button>
+    </form>
   </div>
 </div>
 
-<script>
-  // 1. Initial In-Memory DSA Database
-  let dsaProblems = [
-    {
-      id: 1,
-      title: "Reverse a String",
-      difficulty: "Easy",
-      description: "Write a function that reverses a string. The input string is given as an array of characters.",
-      starterCode: "function reverseString(str) {\n  // Your code here\n}"
-    }
-  ];
+<footer class="footer" id="about">
+  <div class="footer-inner">
+    <div class="brand">
+      <span class="brand-mark">&gt;_</span>
+      <span class="brand-name">nexora<span class="brand-dot">.ai</span></span>
+    </div>
+    <p class="footer-tag">Built for developers who'd rather think in algorithms than fight syntax.</p>
+    <div class="footer-links">
+      <a href="mailto:support@nexoraai.com">Support</a>
+      <a href="#">Instagram</a>
+    </div>
+    <p class="footer-copy">© 2026 Nexora AI. All rights reserved.</p>
+  </div>
+</footer>
 
-  // 2. Tab Navigation Function
-  function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    if (tab === 'solve') {
-      document.getElementById('solve-section').style.display = 'block';
-      document.getElementById('add-section').style.display = 'none';
-      event.target.classList.add('active');
-      renderProblems();
-    } else {
-      document.getElementById('solve-section').style.display = 'none';
-      document.getElementById('add-section').style.display = 'block';
-      event.target.classList.add('active');
-    }
-  }
-
-  // 3. Render Problems to UI
-  function renderProblems() {
-    const container = document.getElementById('problem-list');
-    container.innerHTML = "";
-
-    dsaProblems.forEach(prob => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <div class="problem-header">
-          <h3>${prob.title}</h3>
-          <span class="badge ${prob.difficulty}">${prob.difficulty}</span>
-        </div>
-        <p>${prob.description}</p>
-        
-        <label>Your Solution Code:</label>
-        <textarea id="code-${prob.id}" class="code-editor">${prob.starterCode}</textarea>
-        
-        <button class="btn" onclick="submitToAI(${prob.id})">Evaluate with Nexora AI</button>
-        
-        <div id="response-${prob.id}" class="ai-response"></div>
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  // 4. Handle Form Submission to Add New DSA Problem
-  document.getElementById('add-problem-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const newProblem = {
-      id: Date.now(),
-      title: document.getElementById('title').value,
-      difficulty: document.getElementById('difficulty').value,
-      description: document.getElementById('description').value,
-      starterCode: document.getElementById('starterCode').value || "// Write code here"
-    };
-
-    dsaProblems.push(newProblem);
-    this.reset();
-    alert("Problem added successfully!");
-    switchTab('solve');
-  });
-
-  // 5. Send Solution Code to Nexora AI API
-  async function submitToAI(problemId) {
-    const problem = dsaProblems.find(p => p.id === problemId);
-    const userCode = document.getElementById(`code-${problemId}`).value;
-    const responseDiv = document.getElementById(`response-${problemId}`);
-
-    responseDiv.style.display = 'block';
-    responseDiv.innerText = "Nexora AI is analyzing your code and complexity...";
-
-    try {
-      // Connects to backend FastAPI server
-      const response = await fetch('http://localhost:8000/api/evaluate-dsa', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          problem_title: problem.title,
-          problem_description: problem.description,
-          user_code: userCode
-        })
-      });
-
-      const data = await response.json();
-      responseDiv.innerText = data.analysis;
-    } catch (error) {
-      responseDiv.innerText = "Error connecting to Nexora AI server. Ensure backend is running.";
-    }
-  }
-
-  // Initial Load
-  renderProblems();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
-async function sendChatMessage(userMessage) {
-  try {
-    const response = await fetch("https://nexora-ai-backend-k2rr.onrender.com/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: userMessage })
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      console.log("AI Response:", data.data);
-      // Update your UI here with data.data
-    } else {
-      console.error("API Error:", data.error);
-    }
-  } catch (error) {
-    console.error("Network Error:", error);
-  }
-}
-    <!-- Link your JS file right here -->
-    <script src="script.js"></script>
-  </body>
-</html>
-<!-- Add this in the <head> tag of index.html -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<textarea id="ai-input" placeholder="Ask complex algorithms..."></textarea>
-<button id="ask-ai-btn">Ask AI</button>
-<div id="ai-output">AI response will appear here...</div>
