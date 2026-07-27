@@ -1,344 +1,185 @@
-/* ===== Design tokens ===== */
-:root {
-  --bg: #12141c;
-  --bg-raised: #191c26;
-  --bg-card: #1e2230;
-  --border: #2a2f40;
-  --text: #edeef2;
-  --text-dim: #9198ab;
-  --amber: #f2a93b;
-  --amber-dim: #a9782d;
-  --teal: #4fd1c5;
-  --red: #e5534b;
+// ===== Scroll reveal =====
+const revealEls = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("in-view");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
+// ===== Config =====
+const BACKEND_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+// ===== Sample problem data (replace with a real fetch from your backend) =====
+let problems = [
+  {
+    title: "Two Sum",
+    difficulty: "easy",
+    description: "Given an array of integers and a target, return indices of the two numbers that add up to target.",
+  },
+  {
+    title: "Longest Palindromic Substring",
+    difficulty: "medium",
+    description: "Return the longest substring of s that reads the same forwards and backwards.",
+  },
+  {
+    title: "Merge K Sorted Lists",
+    difficulty: "hard",
+    description: "Merge k sorted linked lists into one sorted list and return its head.",
+  },
+  {
+    title: "Valid Parentheses",
+    difficulty: "easy",
+    description: "Determine if a string of brackets is valid using a stack.",
+  },
+  {
+    title: "Course Schedule",
+    difficulty: "medium",
+    description: "Determine if you can finish all courses given prerequisite pairs (cycle detection in a graph).",
+  },
+];
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+const problemGrid = document.getElementById("problemGrid");
+const tabs = document.querySelectorAll(".tab");
 
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+function renderProblems(filter = "all") {
+  problemGrid.innerHTML = "";
+  const filtered = filter === "all" ? problems : problems.filter(p => p.difficulty === filter);
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--amber);
-  letter-spacing: 0.02em;
-  margin-bottom: 0.75rem;
-}
+  if (filtered.length === 0) {
+    problemGrid.innerHTML = `<p style="color:var(--text-dim);">No problems in this difficulty yet.</p>`;
+    return;
+  }
 
-h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-/* ===== Buttons ===== */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.6rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.15s ease;
-}
-.btn-primary { background: var(--amber); color: #1a1408; }
-.btn-primary:hover { background: #ffbe5c; transform: translateY(-1px); }
-.btn-ghost { border: 1px solid var(--border); color: var(--text); }
-.btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-.btn-outline {
-  border: 1px dashed var(--border);
-  color: var(--text-dim);
-  background: transparent;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 10px;
-  margin-top: 1.5rem;
-}
-.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-/* ===== Nav ===== */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(18, 20, 28, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.brand { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
-.brand-mark { color: var(--amber); font-family: var(--font-mono); }
-.brand-dot { color: var(--amber); }
-.nav-links { display: flex; gap: 1.75rem; font-size: 0.9rem; color: var(--text-dim); }
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.5rem 1.1rem;
-  border-radius: 6px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-}
-.nav-cta:hover { border-color: var(--amber); color: var(--amber); }
-
-@media (max-width: 720px) {
-  .nav-links { display: none; }
+  filtered.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "problem-card";
+    card.innerHTML = `
+      <div class="problem-card-top">
+        <h3>${escapeHTML(p.title)}</h3>
+        <span class="difficulty-badge ${p.difficulty}">${p.difficulty}</span>
+      </div>
+      <p>${escapeHTML(p.description)}</p>
+    `;
+    problemGrid.appendChild(card);
+  });
 }
 
-/* ===== Hero ===== */
-.hero { padding: 4.5rem 1.5rem 3rem; }
-.hero-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-.hero-title {
-  font-size: clamp(2rem, 5vw, 3.1rem);
-  line-height: 1.15;
-  margin-bottom: 1.3rem;
-}
-.hero-title .line { display: block; }
-.hero-title .accent { color: var(--amber); }
-.cursor { animation: blink 1s step-start infinite; color: var(--teal); }
-@keyframes blink { 50% { opacity: 0; } }
-
-.hero-sub { color: var(--text-dim); max-width: 460px; margin-bottom: 2rem; font-size: 1.02rem; }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-.hero-terminal {
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
-}
-.terminal-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.7rem 1rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-}
-.dot { width: 10px; height: 10px; border-radius: 50%; }
-.dot.red { background: var(--red); }
-.dot.yellow { background: var(--amber); }
-.dot.green { background: var(--teal); }
-.terminal-title { margin-left: 0.7rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); }
-.terminal-body { padding: 1.3rem; font-family: var(--font-mono); font-size: 0.85rem; min-height: 180px; }
-.term-line { margin-bottom: 0.9rem; }
-.prompt { color: var(--teal); margin-right: 0.4rem; }
-.term-response { color: var(--text-dim); padding-left: 1.2rem; border-left: 2px solid var(--border); }
-.typing-cursor { animation: blink 1s step-start infinite; color: var(--amber); }
-
-@media (max-width: 860px) {
-  .hero-inner { grid-template-columns: 1fr; }
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
 }
 
-/* ===== Stats ===== */
-.stats { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-raised); }
-.stats-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-.stat { display: flex; flex-direction: column; align-items: center; }
-.stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--amber); }
-.stat-label { color: var(--text-dim); font-size: 0.85rem; }
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    renderProblems(tab.dataset.filter);
+  });
+});
 
-/* ===== Problems ===== */
-.problems { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
-.section-head { margin-bottom: 2rem; }
-.section-head h2 { font-size: 1.9rem; margin-bottom: 0.5rem; }
-.section-sub { color: var(--text-dim); max-width: 500px; }
+renderProblems();
 
-.problem-tabs { display: flex; gap: 0.6rem; margin-bottom: 1.8rem; }
-.tab {
-  padding: 0.5rem 1.1rem;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-.tab.active { background: var(--amber); color: #1a1408; border-color: var(--amber); }
+// ===== Add problem modal =====
+const modalOverlay = document.getElementById("modalOverlay");
+const addProblemBtn = document.getElementById("addProblemBtn");
+const modalClose = document.getElementById("modalClose");
+const problemForm = document.getElementById("problemForm");
 
-.problem-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.1rem;
-}
-.problem-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.3rem;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-.problem-card:hover { border-color: var(--amber-dim); transform: translateY(-2px); }
-.problem-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.7rem; }
-.problem-card h3 { font-size: 1.05rem; font-weight: 600; }
-.difficulty-badge { font-family: var(--font-mono); font-size: 0.7rem; padding: 0.2rem 0.55rem; border-radius: 4px; text-transform: uppercase; }
-.difficulty-badge.easy { background: rgba(79,209,197,0.15); color: var(--teal); }
-.difficulty-badge.medium { background: rgba(242,169,59,0.15); color: var(--amber); }
-.difficulty-badge.hard { background: rgba(229,83,75,0.15); color: var(--red); }
-.problem-card p { color: var(--text-dim); font-size: 0.88rem; }
+addProblemBtn.addEventListener("click", () => modalOverlay.classList.add("open"));
+modalClose.addEventListener("click", () => modalOverlay.classList.remove("open"));
+modalOverlay.addEventListener("click", e => {
+  if (e.target === modalOverlay) modalOverlay.classList.remove("open");
+});
 
-/* ===== Features ===== */
-.features { max-width: 1100px; margin: 0 auto; padding: 1rem 1.5rem 5rem; }
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-.feature-card {
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.8rem;
-}
-.feature-num {
-  font-family: var(--font-mono);
-  color: var(--amber-dim);
-  font-size: 0.85rem;
-  display: block;
-  margin-bottom: 0.8rem;
-}
-.feature-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
-.feature-card p { color: var(--text-dim); font-size: 0.9rem; }
+problemForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const title = document.getElementById("pTitle").value.trim();
+  const difficulty = document.getElementById("pDifficulty").value;
+  const description = document.getElementById("pDescription").value.trim();
+  // starter code captured but not rendered in the card — wire this to your backend's
+  // problem-creation endpoint (e.g. POST /api/problems) to persist it.
 
-/* ===== Scroll reveal ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  if (!title || !description) return;
+
+  problems.unshift({ title, difficulty, description });
+  problemForm.reset();
+  modalOverlay.classList.remove("open");
+
+  // reset to "all" tab so the new problem is visible
+  tabs.forEach(t => t.classList.remove("active"));
+  tabs[0].classList.add("active");
+  renderProblems("all");
+});
+
+// ===== Hero terminal — cycles through sample prompts =====
+const demoLines = [
+  { q: "explain quicksort time complexity", a: "Average case O(n log n), worst case O(n²) on already-sorted input with a poor pivot choice. Use median-of-three to avoid it." },
+  { q: "why is my binary search off by one?", a: "Check your loop condition — using `<=` with `mid = (lo+hi)/2` and not updating `hi = mid - 1` on the high branch is the classic culprit." },
+  { q: "difference between BFS and DFS?", a: "BFS explores level by level using a queue — best for shortest path. DFS goes deep using a stack/recursion — best for exploring all paths or detecting cycles." },
+];
+
+let demoIndex = 0;
+const terminalBody = document.getElementById("terminalBody");
+
+function cycleDemo() {
+  demoIndex = (demoIndex + 1) % demoLines.length;
+  const { q, a } = demoLines[demoIndex];
+  terminalBody.innerHTML = `
+    <div class="term-line"><span class="prompt">&gt;</span> ${escapeHTML(q)}</div>
+    <div class="term-line term-response">${escapeHTML(a)}</div>
+    <div class="term-line"><span class="prompt">&gt;</span> <span class="typing-cursor">▌</span></div>
+  `;
 }
 
-/* ===== Chat ===== */
-.chat { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
-.chat-panel {
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.3rem;
-  border-bottom: 1px solid var(--border);
-}
-.chat-header-title { font-family: var(--font-display); font-weight: 600; }
-.chat-status { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--text-dim); }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+setInterval(cycleDemo, 6000);
 
-.chat-window { height: 320px; overflow-y: auto; padding: 1.3rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.chat-msg { max-width: 80%; padding: 0.7rem 1rem; border-radius: 10px; font-size: 0.92rem; }
-.chat-msg-ai { background: var(--bg-card); align-self: flex-start; border: 1px solid var(--border); }
-.chat-msg-user { background: var(--amber); color: #1a1408; align-self: flex-end; font-weight: 500; }
-.chat-msg-error { background: rgba(229,83,75,0.15); color: var(--red); align-self: flex-start; border: 1px solid rgba(229,83,75,0.3); }
+// ===== Chat wired to backend =====
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+const chatWindow = document.getElementById("chatWindow");
+const chatStatus = document.getElementById("chatStatus");
 
-.chat-input-row { display: flex; border-top: 1px solid var(--border); }
-.chat-input-row input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 1rem 1.3rem;
-  color: var(--text);
-  font-size: 0.92rem;
-}
-.chat-input-row input:focus { outline: none; }
-.chat-send { border-radius: 0; padding: 1rem 1.6rem; }
-
-/* ===== Modal ===== */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.8rem;
-  max-width: 480px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
-.modal-close { font-size: 1.4rem; color: var(--text-dim); }
-.modal-close:hover { color: var(--text); }
-#problemForm label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; }
-#problemForm input, #problemForm select, #problemForm textarea {
-  display: block;
-  width: 100%;
-  margin-top: 0.4rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.6rem 0.8rem;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-}
-#problemForm textarea.mono { font-family: var(--font-mono); font-size: 0.82rem; }
-#problemForm input:focus, #problemForm select:focus, #problemForm textarea:focus { outline: none; border-color: var(--amber); }
-
-/* ===== Footer ===== */
-.footer { border-top: 1px solid var(--border); padding: 3rem 1.5rem 2rem; }
-.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; }
-.footer-tag { color: var(--text-dim); font-size: 0.9rem; max-width: 400px; }
-.footer-links { display: flex; gap: 1.3rem; font-size: 0.85rem; }
-.footer-links a:hover { color: var(--amber); }
-.footer-copy { color: #565c6e; font-size: 0.78rem; margin-top: 0.5rem; }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .cursor, .typing-cursor { animation: none; }
+function appendMessage(text, type) {
+  const msg = document.createElement("div");
+  msg.className = `chat-msg chat-msg-${type}`;
+  msg.textContent = text;
+  chatWindow.appendChild(msg);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return msg;
 }
 
-/* Focus visibility */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
+chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const message = chatInput.value.trim();
+  if (!message) return;
+
+  appendMessage(message, "user");
+  chatInput.value = "";
+
+  const loadingMsg = appendMessage("Thinking…", "ai");
+
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      loadingMsg.textContent = data.data;
+    } else {
+      loadingMsg.textContent = data.error || "Something went wrong. Try again.";
+      loadingMsg.className = "chat-msg chat-msg-error";
+    }
+  } catch (err) {
+    loadingMsg.textContent = "Couldn't reach Nexora's server. It may be waking up — try again in a few seconds.";
+    loadingMsg.className = "chat-msg chat-msg-error";
+  }
+});
