@@ -1,3 +1,15 @@
+// ===== Scroll reveal =====
+const revealEls = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("in-view");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
 // ===== Config =====
 const BACKEND_URL = "https://nexora-ai-backend-k2rr.onrender.com/api/chat";
 
