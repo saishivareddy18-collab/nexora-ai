@@ -1102,3 +1102,60 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-actions .btn { width: 100%; }
   .chat-msg { max-width: 92%; }
 }
+/* ===============================
+   Founder Badge
+   =============================== */
+
+.founder-badge{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+
+    padding: 10px 18px;
+
+    background: rgba(15,23,42,0.75);
+    backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(59,130,246,.35);
+    border-radius: 50px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
+
+    box-shadow:
+        0 0 20px rgba(59,130,246,.25),
+        0 8px 25px rgba(0,0,0,.35);
+
+    transition: all .35s ease;
+    cursor: default;
+}
+
+.founder-badge:hover{
+    transform: translateY(-4px) scale(1.05);
+    box-shadow:
+        0 0 35px rgba(59,130,246,.55),
+        0 10px 30px rgba(0,0,0,.45);
+}
+
+.founder-badge .label{
+    color:#93c5fd;
+    font-weight:500;
+}
+
+.founder-badge .name{
+    color:#ffffff;
+    font-weight:700;
+}
+
+/* Mobile */
+@media (max-width:768px){
+    .founder-badge{
+        bottom:15px;
+        right:15px;
+        padding:8px 14px;
+        font-size:12px;
+    }
+}
