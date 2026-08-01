@@ -206,3 +206,38 @@ nav ul{
 }
 
 }
+background: linear-gradient(135deg,#0b1120,#111827,#1e293b);
+background:
+radial-gradient(circle at top,#f9731620 0%,transparent 35%),
+linear-gradient(180deg,#0b1120,#111827 70%,#0b1120);
+.hero h1{
+    font-size:4rem;
+    font-weight:700;
+    line-height:1.1;
+}
+.card{
+    background:#18212f;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:30px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#f97316;
+    box-shadow:0 15px 40px rgba(249,115,22,.18);
+}
+.btn{
+    border-radius:999px;
+    font-weight:600;
+}
+nav{
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(16px);
+    background:rgba(11,17,32,.75);
+}
+section{
+    padding:100px 0;
+}
