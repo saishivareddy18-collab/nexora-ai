@@ -1,749 +1,148 @@
-/* ============================================================
-   NEXORA AI — PREMIUM STYLE SYSTEM v2
-   Palette: deep slate base, electric blue → cyan accent
-   Fonts: Space Grotesk (display) + Inter (body)
-   ============================================================ */
+/* ==========================================
+   NEXORA AI - Premium Color System
+========================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
-/* ---------- 1. TOKENS ---------- */
-:root {
-  /* Color */
-  --bg: #030712;
-  --surface: #111827;
-  --surface-glass: rgba(17, 24, 39, 0.55);
-  --border: rgba(148, 163, 184, 0.14);
-  --border-strong: rgba(148, 163, 184, 0.28);
-
-  --blue: #3b82f6;
-  --cyan: #06b6d4;
-
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-faint: #5b6579;
-
-  /* Type */
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-
-  /* Radius */
-  --r-sm: 8px;
-  --r-md: 14px;
-  --r-lg: 22px;
-  --r-full: 999px;
-
-  /* Shadow / blur */
-  --shadow-glow: 0 0 60px rgba(59, 130, 246, 0.25);
-  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
-  --blur-glass: blur(18px);
-
-  /* Motion */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 0.4s;
-}
-
-/* ---------- 2. RESET / BASE ---------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  line-height: 1.55;
-  overflow-x: hidden;
-  position: relative;
-  min-height: 100vh;
-}
-
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
-img { max-width: 100%; display: block; }
-
-:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
-  border-radius: var(--r-sm);
-}
-
-/* ---------- 3. CUSTOM SCROLLBAR ---------- */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--blue), var(--cyan));
-  border-radius: var(--r-full);
-  border: 2px solid var(--bg);
-}
-* { scrollbar-width: thin; scrollbar-color: var(--blue) var(--bg); }
-
-/* ---------- 4. AURORA ANIMATED BACKGROUND ---------- */
-.aurora-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.aurora-bg::before,
-.aurora-bg::after {
-  content: '';
-  position: absolute;
-  width: 58vw;
-  height: 58vw;
-  border-radius: 50%;
-  filter: blur(130px);
-  opacity: 0.28;
-  animation: auroraDrift 22s var(--ease) infinite alternate;
-}
-
-.aurora-bg::before {
-  top: -18%;
-  left: -12%;
-  background: radial-gradient(circle, var(--blue), transparent 70%);
-}
-
-.aurora-bg::after {
-  bottom: -22%;
-  right: -12%;
-  background: radial-gradient(circle, var(--cyan), transparent 70%);
-  animation-delay: -11s;
-}
-
-.aurora-bg .aurora-mid {
-  position: absolute;
-  top: 32%;
-  left: 38%;
-  width: 40vw;
-  height: 40vw;
-  border-radius: 50%;
-  background: radial-gradient(circle, #1d4ed8, transparent 70%);
-  filter: blur(150px);
-  opacity: 0.18;
-  animation: auroraDrift 18s var(--ease) infinite alternate-reverse;
-}
-
-@keyframes auroraDrift {
-  0%   { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(6%, 8%) scale(1.15); }
-}
-
-.aurora-bg .grain {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-}
-
-/* ---------- 5. FLOATING GLASS NAVBAR ---------- */
-.navbar {
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(920px, 92vw);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  border-radius: var(--r-full);
-  background: var(--surface-glass);
-  backdrop-filter: var(--blur-glass);
-  -webkit-backdrop-filter: var(--blur-glass);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
-  transition: top var(--dur) var(--ease), background var(--dur) var(--ease), padding var(--dur) var(--ease);
-}
-
-.navbar.is-scrolled {
-  top: 8px;
-  padding: 9px 20px;
-  background: rgba(3, 7, 18, 0.78);
-}
-
-.navbar__brand {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--cyan);
-}
-
-.navbar__links {
-  display: flex;
-  gap: 28px;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-.navbar__links a { position: relative; transition: color 0.25s var(--ease); }
-.navbar__links a::after {
-  content: '';
-  position: absolute;
-  left: 0; bottom: -4px;
-  width: 0; height: 1px;
-  background: var(--cyan);
-  transition: width 0.25s var(--ease);
-}
-.navbar__links a:hover { color: var(--text); }
-.navbar__links a:hover::after { width: 100%; }
-
-/* ---------- 6. ANIMATED GRADIENT TEXT ---------- */
-.text-gradient {
-  background: linear-gradient(100deg, var(--blue), var(--cyan) 50%, var(--blue) 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 6s ease-in-out infinite;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-}
-
-/* ---------- 7. GLASSMORPHISM CARDS ---------- */
-.glass-card {
-  background: var(--surface-glass);
-  backdrop-filter: var(--blur-glass);
-  -webkit-backdrop-filter: var(--blur-glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-card);
-  padding: 28px;
-  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
-
-.glass-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-card), var(--shadow-glow);
-  transform: translateY(-4px);
-}
-
-/* ---------- 8. 3D HOVER EFFECT ---------- */
-/* Set --rx / --ry via JS on mousemove for true cursor-tracked tilt */
-.tilt-card {
-  --rx: 0deg;
-  --ry: 0deg;
-  perspective: 900px;
-  transform-style: preserve-3d;
-}
-
-.tilt-card__inner {
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.15s var(--ease);
-  will-change: transform;
-}
-
-.tilt-card:hover .tilt-card__inner {
-  transition: transform var(--dur) var(--ease);
-}
-
-/* ---------- 9. MOUSE-FOLLOW GLOW ---------- */
-/* Set --mx / --my (percentages) via JS mousemove listener */
-.glow-surface {
-  position: relative;
-  isolation: isolate;
-  --mx: 50%;
-  --my: 50%;
-}
-
-.glow-surface::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: radial-gradient(
-    380px circle at var(--mx) var(--my),
-    rgba(59, 130, 246, 0.2),
-    transparent 65%
-  );
-  opacity: 0;
-  transition: opacity 0.3s var(--ease);
-}
-
-.glow-surface:hover::before { opacity: 1; }
-
-/* ---------- 10. PREMIUM BUTTONS ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border-radius: var(--r-full);
-  font-weight: 600;
-  font-size: 0.92rem;
-  letter-spacing: -0.01em;
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.25s var(--ease);
-}
-
-.btn-primary {
-  color: #030712;
-  background: linear-gradient(100deg, var(--cyan), var(--blue));
-  box-shadow: 0 8px 30px -8px rgba(59, 130, 246, 0.55);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 40px -8px rgba(59, 130, 246, 0.75);
-}
-
-.btn-primary:active { transform: translateY(0); }
-
-.btn-ghost {
-  color: var(--text);
-  background: rgba(148, 163, 184, 0.06);
-  border: 1px solid var(--border-strong);
-}
-
-.btn-ghost:hover { background: rgba(148, 163, 184, 0.12); }
-
-/* ---------- 11. AI TYPING ANIMATION ---------- */
-.typing-dots {
-  display: inline-flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.typing-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cyan);
-  animation: typingBounce 1.1s ease-in-out infinite;
-}
-
-.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes typingBounce {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30% { transform: translateY(-5px); opacity: 1; }
-}
-
-.cursor-blink {
-  display: inline-block;
-  width: 2px;
-  height: 1em;
-  background: var(--cyan);
-  animation: blink 1s step-end infinite;
-  vertical-align: text-bottom;
-}
-
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ---------- 12. SCROLL REVEAL ---------- */
-/* Toggle .is-visible via IntersectionObserver in JS */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-}
-
-.reveal.is-visible { opacity: 1; transform: none; }
-
-.reveal-stagger > * { transition-delay: calc(var(--i, 0) * 90ms); }
-
-/* ---------- 13. ANIMATED COUNTERS ---------- */
-/* JS increments textContent; CSS handles the visual pop */
-.counter {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-variant-numeric: tabular-nums;
-}
-
-.counter.is-counting { animation: counterPop 0.4s var(--ease); }
-
-@keyframes counterPop {
-  0% { transform: scale(0.96); opacity: 0.6; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* ---------- 14. TESTIMONIALS SLIDER ---------- */
-.testimonial-track {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 8px 4px 24px;
-  scrollbar-width: none;
-}
-
-.testimonial-track::-webkit-scrollbar { display: none; }
-
-.testimonial-card {
-  flex: 0 0 min(360px, 85vw);
-  scroll-snap-align: start;
-}
-
-.testimonial-card blockquote {
-  color: var(--text);
-  font-size: 0.98rem;
-  margin-bottom: 16px;
-}
-
-.testimonial-card footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-.testimonial-card footer img {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--border-strong);
-}
-
-/* ---------- 15. FAQ ACCORDION (pure CSS, <details>) ---------- */
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  padding: 18px 4px;
-}
-
-.faq-item summary {
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.faq-item summary::-webkit-details-marker { display: none; }
-
-.faq-item summary::after {
-  content: '+';
-  font-size: 1.3rem;
-  color: var(--cyan);
-  transition: transform 0.3s var(--ease);
-}
-
-.faq-item[open] summary::after { transform: rotate(45deg); }
-
-.faq-item p {
-  color: var(--text-muted);
-  margin-top: 12px;
-  max-width: 60ch;
-}
-
-/* ---------- 16. PRICING CARDS ---------- */
-.pricing-grid {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .pricing-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-.price-card {
-  text-align: left;
-  position: relative;
-}
-
-.price-card__tier { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-.price-card__amount {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  margin: 10px 0 4px;
-}
-
-.price-card__amount span { font-size: 1rem; color: var(--text-muted); font-family: var(--font-body); }
-
-.price-card--featured {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-card), var(--shadow-glow);
-  transform: scale(1.03);
-}
-
-.price-card--featured::before {
-  content: 'Most popular';
-  position: absolute;
-  top: -12px;
-  left: 24px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: var(--r-full);
-  background: linear-gradient(100deg, var(--cyan), var(--blue));
-  color: #030712;
-}
-
-.price-card ul { margin: 20px 0; color: var(--text-muted); font-size: 0.9rem; }
-.price-card li { padding: 6px 0; }
-
-/* ---------- 17. ANIMATED PARTICLES ---------- */
-.particles {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.particles span {
-  position: absolute;
-  bottom: -10px;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--cyan);
-  opacity: 0.6;
-  animation: floatUp linear infinite;
-}
-
-/* vary each particle's position/timing inline via style attrs in HTML,
-   e.g. style="left:12%; animation-duration:14s; animation-delay:-3s" */
-@keyframes floatUp {
-  0%   { transform: translateY(0) translateX(0); opacity: 0; }
-  10%  { opacity: 0.6; }
-  100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
-}
-
-/* ---------- 18. PREMIUM FOOTER ---------- */
-.footer {
-  border-top: 1px solid var(--border);
-  padding: 48px 6vw 32px;
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-@media (min-width: 768px) {
-  .footer { flex-direction: row; justify-content: space-between; align-items: flex-start; }
-}
-
-.footer__brand {
-  font-family: var(--font-display);
-  color: var(--cyan);
-  margin-bottom: 8px;
-}
-
-.footer__tagline { color: var(--text-muted); font-size: 0.9rem; max-width: 36ch; }
-
-.footer__links { display: flex; gap: 20px; color: var(--text-muted); font-size: 0.88rem; }
-.footer__links a:hover { color: var(--text); }
-
-.footer__meta {
-  color: var(--text-faint);
-  font-size: 0.78rem;
-  margin-top: 24px;
-}
-
-/* ---------- 19. MOBILE-FIRST RESPONSIVE BASE ---------- */
-.container { width: 100%; padding: 0 6vw; margin: 0 auto; max-width: 1200px; }
-
-.hero__title { font-size: clamp(2rem, 8vw, 3.6rem); }
-.hero__subtitle { font-size: clamp(0.95rem, 2.5vw, 1.1rem); color: var(--text-muted); max-width: 60ch; }
-
-@media (min-width: 640px) {
-  .navbar__links { display: flex; }
-}
-
-@media (max-width: 639px) {
-  .navbar__links { display: none; }
-  .footer { text-align: center; align-items: center; }
-}
-
-/* ---------- 20. SMOOTH PAGE TRANSITIONS ---------- */
-@view-transition { navigation: auto; }
-
-.page-fade { animation: pageFadeIn 0.5s var(--ease); }
-
-@keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
-}
-
-/* ---------- 21. LOADING ANIMATION ---------- */
-.loader {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 2px solid var(--border-strong);
-  border-top-color: var(--cyan);
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.skeleton {
-  background: linear-gradient(100deg, var(--surface) 30%, rgba(148,163,184,0.12) 50%, var(--surface) 70%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
-  border-radius: var(--r-sm);
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* ---------- 22. SHADOWS & BLUR UTILITIES ---------- */
-.shadow-soft { box-shadow: 0 10px 40px -14px rgba(0,0,0,0.55); }
-.shadow-glow { box-shadow: var(--shadow-glow); }
-.blur-bg { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-/* ===============================
-   Founder Badge
-   =============================== */
-
-.founder-badge {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-
-  padding: 10px 18px;
-
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  border-radius: 50px;
-
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-
-  box-shadow:
-    0 0 20px rgba(59, 130, 246, 0.25),
-    0 8px 25px rgba(0, 0, 0, 0.35);
-
-  transition: all 0.35s var(--ease, ease);
-  cursor: default;
-}
-
-.founder-badge:hover {
-  transform: translateY(-4px) scale(1.05);
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-  box-shadow:
-    0 0 40px rgba(59, 130, 246, 0.55),
-    0 10px 30px rgba(0, 0, 0, 0.45);
-}
-
-.founder-badge .label {
-  color: #93c5fd;
-  font-weight: 500;
-}
-
-.founder-badge .name {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-@media (max-width: 768px) {
-  .founder-badge {
-    bottom: 15px;
-    right: 15px;
-    padding: 8px 14px;
-    font-size: 12px;
-  }
-}
 :root{
-  --bg:#020617;
-  --bg-secondary:#0B1220;
-  --surface:rgba(17,24,39,.72);
 
-  --primary:#3B82F6;
-  --secondary:#06B6D4;
-  --accent:#38BDF8;
+  /* Background */
+  --bg: #020617;
+  --bg-secondary: #08111f;
 
-  --text:#F8FAFC;
-  --text-secondary:#CBD5E1;
-  --text-muted:#94A3B8;
+  /* Cards / Surface */
+  --surface: #0F172A;
+  --surface-glass: rgba(15,23,42,.72);
 
-  --border:rgba(255,255,255,.08);
+  /* Brand Colors */
+  --primary: #3B82F6;
+  --blue: #3B82F6;
+  --secondary: #06B6D4;
+  --cyan: #06B6D4;
+  --accent: #38BDF8;
 
-  --radius:18px;
+  /* Text */
+  --text: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
 
-  --shadow:
+  /* Borders */
+  --border: rgba(255,255,255,.08);
+  --border-hover: rgba(59,130,246,.45);
+
+  /* Gradient */
+  --gradient-primary:
+      linear-gradient(135deg,#3B82F6 0%,#06B6D4 50%,#38BDF8 100%);
+
+  /* Shadows */
+  --shadow-soft:
+      0 10px 30px rgba(0,0,0,.35);
+
+  --shadow-large:
       0 20px 60px rgba(0,0,0,.45);
 
-  --glow:
-      0 0 80px rgba(59,130,246,.35);
+  --shadow-glow:
+      0 0 50px rgba(59,130,246,.35);
 
-  --gradient:
-      linear-gradient(135deg,#3B82F6,#06B6D4,#38BDF8);
-
-  --glass:
-      rgba(255,255,255,.05);
 }
 body{
+
     background:
-    radial-gradient(circle at top left,#0f3fff22,transparent 40%),
-    radial-gradient(circle at bottom right,#00d9ff22,transparent 35%),
+    radial-gradient(circle at top left,
+    rgba(59,130,246,.18),
+    transparent 35%),
+
+    radial-gradient(circle at bottom right,
+    rgba(6,182,212,.18),
+    transparent 35%),
+
     #020617;
 
-    color:#F8FAFC;
+    color:var(--text);
 
     font-family:"Inter",sans-serif;
 
     overflow-x:hidden;
+}
+.btn-primary{
 
-    position:relative;
+    background:var(--gradient-primary);
+
+    color:#fff;
+
+    border:none;
+
+    box-shadow:var(--shadow-glow);
+
 }
 .glass-card{
-    background:rgba(17,24,39,.55);
 
-    backdrop-filter:blur(22px);
+    background:var(--surface-glass);
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid var(--border);
 
-    border-radius:20px;
+    box-shadow:var(--shadow-large);
+
+}
+/* ==========================================
+   Premium Founder Badge
+========================================== */
+
+.founder-badge{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:9999;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:2px;
+
+    padding:12px 18px;
+
+    background:rgba(15,23,42,.75);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(59,130,246,.25);
+    border-radius:16px;
 
     box-shadow:
-    0 15px 45px rgba(0,0,0,.35);
+        0 10px 30px rgba(0,0,0,.35),
+        0 0 25px rgba(59,130,246,.18);
 
-    transition:.45s;
+    transition:all .35s ease;
 }
 
-.glass-card:hover{
-
-    transform:
-    translateY(-10px)
-    scale(1.02);
-
+.founder-badge:hover{
+    transform:translateY(-4px);
     border-color:#3B82F6;
-
     box-shadow:
-    0 0 60px rgba(59,130,246,.28);
+        0 15px 40px rgba(0,0,0,.45),
+        0 0 40px rgba(59,130,246,.35);
 }
-.navbar{
 
-backdrop-filter:blur(25px);
+.founder-label{
+    font-size:11px;
+    color:#94A3B8;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+}
 
-background:rgba(10,15,30,.62);
+.founder-name{
+    font-size:15px;
+    font-weight:700;
+    color:#F8FAFC;
+    font-family:"Space Grotesk",sans-serif;
+}
 
-border:1px solid rgba(255,255,255,.08);
+@media(max-width:768px){
+    .founder-badge{
+        bottom:15px;
+        right:15px;
+        padding:10px 14px;
+    }
 
-box-shadow:
-
-0 15px 45px rgba(0,0,0,.35);
-
+    .founder-name{
+        font-size:13px;
+    }
 }
