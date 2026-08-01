@@ -1,409 +1,259 @@
-/* Practice Section */
-
-.problems{
-    padding:100px 20px;
-}
-
-.problems h2{
-    text-align:center;
-    font-size:2.5rem;
-    margin-bottom:10px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#94a3b8;
-    margin-bottom:50px;
-}
-
-.problem-card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;
-    padding:24px;
-    margin-bottom:20px;
-    transition:.3s;
-}
-
-.problem-card:hover{
-    border-color:#10b981;
-    transform:translateY(-4px);
-}
-
-.problem-card div{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.problem-card h3{
-    font-size:1.3rem;
-    color:#fff;
-}
-
-.problem-card p{
-    color:#cbd5e1;
-    margin-bottom:20px;
-}
-
-.easy,
-.medium,
-.hard{
-    padding:6px 14px;
-    border-radius:999px;
-    font-size:.85rem;
-    font-weight:600;
-}
-
-.easy{
-    background:#064e3b;
-    color:#6ee7b7;
-}
-
-.medium{
-    background:#78350f;
-    color:#fcd34d;
-}
-
-.hard{
-    background:#7f1d1d;
-    color:#fca5a5;
-}
-
-.solve-btn{
-    display:inline-block;
-    padding:10px 22px;
-    background:#10b981;
-    color:#04120c;
-    border-radius:10px;
-    font-weight:600;
-    text-decoration:none;
-    transition:.3s;
-}
-
-.solve-btn:hover{
-    background:#059669;
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexora AI — Coding & DSA Assistant</title>
+
+<title>Nexora AI — Intelligence For Everyone</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="brand">
-      <span class="brand-mark">&gt;_</span>
-      <span class="brand-name">nexora<span class="brand-dot">.ai</span></span>
-    </div>
-    <div class="nav-links">
-      <a href="#problems">Problems</a>
-      <a href="#chat">Ask AI</a>
-      <a href="#about">About</a>
-    </div>
-    <a href="#chat" class="nav-cta">Launch</a>
-  </div>
+<!-- NAVBAR -->
+
+<header>
+<nav class="navbar">
+
+<div class="logo">
+NEXORA<span>AI</span>
+</div>
+
+<div class="nav-links">
+<a href="#">Product</a>
+<a href="#">Features</a>
+<a href="#">Solutions</a>
+<a href="#">Pricing</a>
+</div>
+
+<button class="nav-btn">
+Try Nexora
+</button>
+
 </nav>
-
-<header class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <p class="eyebrow">// status: online</p>
-      <h1 class="hero-title">
-        <span class="line" data-line="1">Debug faster.</span>
-        <span class="line" data-line="2">Think in algorithms.</span>
-        <span class="line accent" data-line="3">Ship with confidence<span class="cursor">▌</span></span>
-      </h1>
-      <p class="hero-sub">Nexora is an AI coding partner built for developers who live in data structures and algorithms — explain a solution, debug a stack trace, or drill a fresh problem, in seconds.</p>
-      <div class="hero-actions">
-        <a href="#chat" class="btn btn-primary">Ask AI something</a>
-        <a href="#problems" class="btn btn-ghost">Browse problems</a>
-      </div>
-    </div>
-
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-        <span class="terminal-title">nexora — session</span>
-      </div>
-      <div class="terminal-body" id="terminalBody">
-        <div class="term-line"><span class="prompt">&gt;</span> explain quicksort time complexity</div>
-        <div class="term-line term-response">Average case O(n log n), worst case O(n²) on already-sorted input with a poor pivot choice. Use median-of-three to avoid it.</div>
-        <div class="term-line"><span class="prompt">&gt;</span> <span class="typing-cursor">▌</span></div>
-      </div>
-    </div>
-  </div>
 </header>
 
-<section class="stats">
-  <div class="stats-inner">
-    <div class="stat"><span class="stat-num">120+</span><span class="stat-label">DSA problems</span></div>
-    <div class="stat"><span class="stat-num">3</span><span class="stat-label">difficulty tiers</span></div>
-    <div class="stat"><span class="stat-num">&lt;2s</span><span class="stat-label">avg. response</span></div>
-  </div>
-</section>
 
-<section class="problems" id="problems">
-  <div class="section-head reveal">
-    <p class="eyebrow">// solve_problems.js</p>
-    <h2>Practice on real problems</h2>
-    <p class="section-sub">Pick a difficulty, read the brief, run your solution against the starter template.</p>
-  </div>
 
-  <div class="problem-tabs">
-    <button class="tab active" data-filter="all">All</button>
-    <button class="tab" data-filter="easy">Easy</button>
-    <button class="tab" data-filter="medium">Medium</button>
-    <button class="tab" data-filter="hard">Hard</button>
-  </div>
+<!-- HERO SECTION -->
 
-  <div class="problem-grid" id="problemGrid">
-    <!-- Cards injected by script.js -->
-  </div>
+<section class="hero">
 
-  <button class="btn btn-outline add-problem-btn" id="addProblemBtn">+ Add new problem</button>
-</section>
+<div class="hero-content">
 
-<section class="features" id="features">
-  <div class="section-head reveal">
-    <p class="eyebrow">// why_nexora.js</p>
-    <h2>Built around how you actually debug</h2>
-    <p class="section-sub">Not a generic chatbot wrapper — Nexora is tuned for the DSA + coding workflow specifically.</p>
-  </div>
-  <div class="feature-grid">
-    <div class="feature-card reveal">
-      <span class="feature-num">01</span>
-      <h3>Complexity-aware answers</h3>
-      <p>Every explanation includes time and space complexity by default, not as an afterthought you have to ask for.</p>
-    </div>
-    <div class="feature-card reveal">
-      <span class="feature-num">02</span>
-      <h3>Reads your actual bug</h3>
-      <p>Paste a stack trace or a broken function and get the specific line that's wrong — not a generic tutorial.</p>
-    </div>
-    <div class="feature-card reveal">
-      <span class="feature-num">03</span>
-      <h3>Practice, not just theory</h3>
-      <p>120+ problems across three difficulty tiers, each with a starter template so you can jump straight to solving.</p>
-    </div>
-  </div>
-</section>
+<p class="tag">
+⚡ Next Generation Artificial Intelligence
+</p>
 
-<section class="chat" id="chat">
-  <div class="chat-panel">
-    <div class="chat-header">
-      <span class="chat-header-title">Ask Nexora</span>
-      <span class="chat-status" id="chatStatus"><span class="status-dot"></span>Online</span>
-    </div>
-    <div class="chat-window" id="chatWindow">
-      <div class="chat-msg chat-msg-ai">
-        Ask me to explain an algorithm, debug a snippet, or walk through a DSA problem.
-      </div>
-    </div>
-    <form class="chat-input-row" id="chatForm">
-      <input type="text" id="chatInput" placeholder="e.g. Why is my binary search off by one?" autocomplete="off">
-      <button type="submit" class="btn btn-primary chat-send">Send</button>
-    </form>
-  </div>
-</section>
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Add a new problem</h3>
-      <button class="modal-close" id="modalClose">&times;</button>
-    </div>
-    <form id="problemForm">
-      <label>Problem title
-        <input type="text" id="pTitle" required placeholder="e.g. Longest Palindromic Substring">
-      </label>
-      <label>Difficulty
-        <select id="pDifficulty">
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </label>
-      <label>Description
-        <textarea id="pDescription" rows="3" required placeholder="Problem statement..."></textarea>
-      </label>
-      <label>Starter code template
-        <textarea id="pStarter" rows="4" class="mono" placeholder="function solve(input) {&#10;  // your code&#10;}"></textarea>
-      </label>
-      <button type="submit" class="btn btn-primary">Add problem</button>
-    </form>
-  </div>
+<h1>
+The AI that
+<br>
+<span>thinks with you.</span>
+</h1>
+
+
+<p class="description">
+
+Nexora AI helps you write, code, create,
+learn and build faster with advanced artificial intelligence.
+
+</p>
+
+
+<div class="hero-buttons">
+
+<button class="primary">
+Start Building →
+</button>
+
+<button class="secondary">
+Watch Demo
+</button>
+
 </div>
 
-<footer class="footer" id="about">
-  <div class="footer-inner">
-    <div class="brand">
-      <span class="brand-mark">&gt;_</span>
-      <span class="brand-name">nexora<span class="brand-dot">.ai</span></span>
-    </div>
-    <p class="footer-tag">Built for developers who'd rather think in algorithms than fight syntax.</p>
-    <div class="footer-links">
-      <a href="mailto:support@nexoraai.com">Support</a>
-      <a href="#">Instagram</a>
-    </div>
-    <p class="footer-copy">© 2026 Nexora AI. All rights reserved.</p>
-  </div>
+
+</div>
+
+
+
+<div class="ai-window">
+
+<div class="window-top">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+<div class="chat">
+
+<p class="user">
+You: Build my AI startup website
+</p>
+
+
+<p class="ai">
+Nexora:
+I will design a modern AI experience
+with premium UI and intelligent features.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<!-- FEATURES -->
+
+
+<section class="features">
+
+<h2>
+Everything you need.
+Powered by AI.
+</h2>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>
+AI Assistant
+</h3>
+
+<p>
+Smart conversations, ideas,
+research and problem solving.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+AI Coding
+</h3>
+
+<p>
+Generate, debug and optimize
+software instantly.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>
+AI Creativity
+</h3>
+
+<p>
+Create content, designs,
+and business solutions.
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- AI POWER SECTION -->
+
+<section class="power">
+
+<h2>
+Built for the AI era.
+</h2>
+
+<p>
+Fast. Intelligent. Secure.
+Designed for creators, developers and businesses.
+</p>
+
+
+<div class="stats">
+
+<div>
+<h3>10x</h3>
+<p>Faster Creation</p>
+</div>
+
+
+<div>
+<h3>24/7</h3>
+<p>AI Assistance</p>
+</div>
+
+
+<div>
+<h3>∞</h3>
+<p>Possibilities</p>
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+<h2>
+Ready to build the future?
+</h2>
+
+<button>
+Launch Nexora AI
+</button>
+
+</section>
+
+
+
+
+<footer>
+
+<p>
+© 2026 Nexora AI. All rights reserved.
+</p>
+
 </footer>
+
 
 <script src="script.js"></script>
+
 </body>
 </html>
-<div class="hero-buttons">
-   <button class="btn">Ask AI Something</button>
-   <button class="btn">Browse Problems</button>
-</div>
-
-<div class="demo-card">
-   ...
-</div>
-    <!-- Your other HTML content -->
-
-    <script>
-      const io = new IntersectionObserver(entries =>
-        entries.forEach(e => e.target.classList.toggle('in-view', e.isIntersecting)),
-        { threshold: 0.15 }
-      );
-
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    </script>
-</body>
-</html>
-<!-- ================= HERO SECTION ================= -->
-<section id="home" class="hero">
-    <div class="hero-content">
-
-        <div class="hero-badge">
-            🚀 The Future of Artificial Intelligence
-        </div>
-
-        <h1>
-            Nexora <span>AI</span>
-        </h1>
-
-        <p class="hero-description">
-            Experience the next generation of AI designed to help you code, learn,
-            create, solve problems, and boost productivity with intelligent
-            conversations powered by cutting-edge technology.
-        </p>
-
-        <div class="hero-buttons">
-            <a href="#chat" class="btn btn-primary">Start Chatting</a>
-            <a href="#features" class="btn btn-secondary">Explore Features</a>
-        </div>
-
-        <!-- Founder Credit -->
-        <div class="founder-credit">
-            <span class="line"></span>
-            <p>
-                🚀 <strong>Nexora AI</strong><br>
-                A Startup Founded by <span class="founder-name">Saishiva</span>
-            </p>
-            <span class="line"></span>
-        </div>
-
-    </div>
-</section>
-<footer class="footer">
-
-<div class="footer-container">
-
-<div>
-<h2 class="footer-logo">Nexora <span>AI</span></h2>
-
-<p class="footer-text">
-The AI Assistant for Coding, Learning & Productivity.
-Built for developers, students, creators and businesses.
-</p>
-</div>
-
-<div>
-<h3 class="footer-title">Product</h3>
-<div class="footer-links">
-<a href="#">Features</a>
-<a href="#">Pricing</a>
-<a href="#">FAQ</a>
-</div>
-</div>
-
-<div>
-<h3 class="footer-title">Company</h3>
-<div class="footer-links">
-<a href="#">About</a>
-<a href="#">Contact</a>
-<a href="#">Privacy</a>
-</div>
-</div>
-
-</div>
-
-<div class="footer-bottom">
-
-<p class="footer-copy">
-© 2026 Nexora AI. All Rights Reserved.
-</p>
-
-<div class="founder-credit">
-<div class="founder-dot"></div>
-<div>
-<div class="founder-label">Founded By</div>
-<div class="founder-name">Saishiva Reddy</div>
-</div>
-</div>
-
-</div>
-
-</footer>
-<section class="problems">
-    <div class="container">
-
-        <h2>Practice Problems</h2>
-        <p class="subtitle">
-            Improve your coding skills with curated interview questions.
-        </p>
-
-        <div class="problem-card">
-            <div>
-                <h3>Two Sum</h3>
-                <span class="easy">Easy</span>
-            </div>
-
-            <p>Find two numbers whose sum equals the target.</p>
-
-            <a href="#" class="solve-btn">Solve →</a>
-        </div>
-
-        <div class="problem-card">
-            <div>
-                <h3>Longest Palindromic Substring</h3>
-                <span class="medium">Medium</span>
-            </div>
-
-            <p>Return the longest palindrome in a string.</p>
-
-            <a href="#" class="solve-btn">Solve →</a>
-        </div>
-
-        <div class="problem-card">
-            <div>
-                <h3>Merge K Sorted Lists</h3>
-                <span class="hard">Hard</span>
-            </div>
-
-            <p>Merge multiple sorted linked lists efficiently.</p>
-
-            <a href="#" class="solve-btn">Solve →</a>
-        </div>
-
-    </div>
-</section>
