@@ -578,3 +578,162 @@ border:none;
 cursor:pointer;
 
 }
+/* =========================
+   NEXORA AI CORE ANIMATION
+========================= */
+
+.ai-core{
+
+position:relative;
+width:320px;
+height:320px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+animation:float 5s ease-in-out infinite;
+
+}
+
+
+
+.core-circle{
+
+width:150px;
+height:150px;
+
+border-radius:50%;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+background:
+radial-gradient(circle,#ffffff,#6366f1);
+
+color:#000;
+
+font-weight:900;
+
+box-shadow:
+0 0 60px #6366f1,
+0 0 120px rgba(99,102,241,.5);
+
+}
+
+
+
+.core-circle span{
+
+font-size:22px;
+
+}
+
+
+
+.core-circle small{
+
+font-size:14px;
+
+}
+
+
+
+.core-ring{
+
+position:absolute;
+
+width:270px;
+height:270px;
+
+border-radius:50%;
+
+border:2px solid rgba(255,255,255,.3);
+
+animation:
+rotate 8s linear infinite;
+
+}
+
+
+
+.core-ring::after{
+
+content:"";
+
+position:absolute;
+
+width:15px;
+height:15px;
+
+background:white;
+
+border-radius:50%;
+
+top:0;
+
+left:50%;
+
+box-shadow:
+0 0 20px white;
+
+}
+
+
+
+.status{
+
+position:absolute;
+
+bottom:20px;
+
+background:
+rgba(255,255,255,.1);
+
+padding:10px 20px;
+
+border-radius:30px;
+
+backdrop-filter:blur(20px);
+
+animation:pulse 2s infinite;
+
+}
+
+
+
+@keyframes rotate{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+
+
+@keyframes float{
+
+50%{
+transform:translateY(-25px);
+}
+
+}
+
+
+
+@keyframes pulse{
+
+50%{
+
+opacity:.5;
+
+}
+
+}
