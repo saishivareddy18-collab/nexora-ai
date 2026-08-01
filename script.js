@@ -493,3 +493,105 @@ window.innerHeight;
 console.log(
 "Nexora AI System Loaded 🚀"
 );
+// ==========================
+// NEXORA AI DEMO CHAT
+// ==========================
+
+
+const sendBtn =
+document.getElementById("sendBtn");
+
+
+const aiInput =
+document.getElementById("aiInput");
+
+
+const aiMessage =
+document.querySelector(".ai-msg");
+
+
+
+const responses=[
+
+"Creating your AI startup strategy 🚀",
+
+"Generating a complete business plan...",
+
+"Building your idea with AI intelligence...",
+
+"Analyzing market opportunities..."
+
+];
+
+
+
+sendBtn.onclick=()=>{
+
+
+let text=aiInput.value;
+
+
+if(text.trim()==="") return;
+
+
+
+aiMessage.innerHTML="Thinking...";
+
+
+
+setTimeout(()=>{
+
+
+let random =
+responses[
+Math.floor(
+Math.random()*responses.length
+)
+];
+
+
+aiMessage.innerHTML=random;
+
+
+},1200);
+
+
+
+aiInput.value="";
+
+
+};
+
+
+
+
+
+// ORB MOUSE 3D EFFECT
+
+
+const orb =
+document.querySelector(".ai-orb");
+
+
+document.addEventListener(
+"mousemove",
+(e)=>{
+
+
+let x =
+(e.clientX/window.innerWidth-.5)*20;
+
+
+let y =
+(e.clientY/window.innerHeight-.5)*20;
+
+
+orb.style.transform=
+`
+rotateX(${-y}deg)
+rotateY(${x}deg)
+`;
+
+
+
+});
