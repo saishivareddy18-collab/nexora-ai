@@ -183,3 +183,172 @@ chatForm.addEventListener("submit", async (e) => {
     loadingMsg.className = "chat-msg chat-msg-error";
   }
 });
+/* ================================================================
+   NEXORA AI — INTERACTIONS
+   Pairs with style.css. Vanilla JS, no dependencies.
+   ================================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLoadingScreen();
+  initNavbarScroll();
+  initScrollReveal();
+  initTypingEffect();
+  initParticles();
+  initMouseGlow();
+  initTiltCards();
+  initCounters();
+});
+
+/* ---------- Loading screen ---------- */
+function initLoadingScreen() {
+  const screen = document.getElementById('loading-screen');
+  if (!screen) return;
+  window.addEventListener('load', () => {
+    setTimeout(() => screen.classList.add('is-hidden'), 400);
+  });
+}
+
+/* ---------- Navbar shrink-on-scroll ---------- */
+function initNavbarScroll() {
+  const nav = document.querySelector('.navbar');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 20);
+  }, { passive: true });
+}
+
+/* ---------- Scroll reveal (IntersectionObserver) ---------- */
+function initScrollReveal() {
+  const items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  items.forEach((item, i) => {
+    item.style.setProperty('--i', i % 6);
+    observer.observe(item);
+  });
+}
+
+/* ---------- AI typing effect ---------- */
+/* Add data-typing="Text to type" to any element to animate it in. */
+function initTypingEffect() {
+  const targets = document.querySelectorAll('[data-typing]');
+  if (!targets.length) return;
+
+  targets.forEach((el) => {
+    const fullText = el.getAttribute('data-typing') || '';
+    el.textContent = '';
+    let i = 0;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        const speed = 28;
+        const tick = () => {
+          if (i <= fullText.length) {
+            el.textContent = fullText.slice(0, i);
+            i++;
+            setTimeout(tick, speed);
+          }
+        };
+        tick();
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+  });
+}
+
+/* ---------- Animated particles ---------- */
+/* Populates any .particles container with N floating dots. */
+function initParticles(count = 24) {
+  document.querySelectorAll('.particles').forEach((container) => {
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.style.left = `${Math.random() * 100}%`;
+      span.style.animationDuration = `${10 + Math.random() * 12}s`;
+      span.style.animationDelay = `-${Math.random() * 20}s`;
+      span.style.opacity = (0.3 + Math.random() * 0.5).toFixed(2);
+      container.appendChild(span);
+    }
+  });
+}
+
+/* ---------- Mouse-follow glow ---------- */
+function initMouseGlow() {
+  const surfaces = document.querySelectorAll('.glow-surface');
+  if (!surfaces.length) return;
+
+  surfaces.forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width) * 100;
+      const my = ((e.clientY - rect.top) / rect.height) * 100;
+      el.style.setProperty('--mx', `${mx}%`);
+      el.style.setProperty('--my', `${my}%`);
+    });
+  });
+}
+
+/* ---------- 3D tilt cards ---------- */
+function initTiltCards() {
+  const cards = document.querySelectorAll('.tilt-card');
+  if (!cards.length) return;
+
+  const maxTilt = 8; // degrees
+
+  cards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.setProperty('--ry', `${px * maxTilt * 2}deg`);
+      card.style.setProperty('--rx', `${py * -maxTilt * 2}deg`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+}
+
+/* ---------- Animated counters ---------- */
+/* Add data-count="120" to an element with class="counter" */
+function initCounters() {
+  const counters = document.querySelectorAll('.counter[data-count]');
+  if (!counters.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.getAttribute('data-count'));
+      const suffix = el.getAttribute('data-suffix') || '';
+      const duration = 1400;
+      const start = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        el.classList.add('is-counting');
+        if (progress < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  counters.forEach((el) => observer.observe(el));
+}
