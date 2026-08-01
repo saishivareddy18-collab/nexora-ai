@@ -737,3 +737,44 @@ opacity:.5;
 }
 
 }
+/* =========================
+   NEXORA AI HERO TEXT GLOW
+========================= */
+
+.hero h1{
+
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#6366f1,
+#22d3ee,
+#ffffff
+);
+
+background-size:200%;
+
+-webkit-background-clip:text;
+background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+animation:
+gradientMove 5s infinite linear;
+
+}
+
+
+/* Moving Gradient */
+
+@keyframes gradientMove{
+
+0%{
+background-position:0%;
+}
+
+100%{
+background-position:200%;
+}
+
+}
