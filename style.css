@@ -241,3 +241,107 @@ nav{
 section{
     padding:100px 0;
 }
+/* ==========================
+   FOUNDER SECTION
+========================== */
+
+.founder{
+
+padding:120px 20px;
+display:flex;
+justify-content:center;
+text-align:center;
+
+}
+
+
+.founder-card{
+
+max-width:800px;
+padding:60px;
+
+background:
+rgba(255,255,255,0.05);
+
+border:
+1px solid rgba(255,255,255,0.12);
+
+border-radius:32px;
+
+backdrop-filter:blur(20px);
+
+}
+
+
+.founder h2{
+
+font-size:55px;
+line-height:1.1;
+font-weight:800;
+
+}
+
+
+.founder p{
+
+font-size:18px;
+opacity:.7;
+margin:25px 0;
+
+}
+
+
+.founder-line{
+
+height:1px;
+background:
+rgba(255,255,255,.2);
+
+margin:40px 0;
+
+}
+
+
+.founder h3{
+
+font-size:14px;
+letter-spacing:3px;
+text-transform:uppercase;
+opacity:.6;
+
+}
+
+
+.founder h1{
+
+font-size:42px;
+margin:15px 0;
+
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#8b5cf6
+);
+
+-webkit-background-clip:text;
+color:transparent;
+
+}
+
+
+.founder-role{
+
+font-size:20px;
+
+}
+
+
+footer{
+
+padding:40px;
+text-align:center;
+
+opacity:.6;
+
+}
