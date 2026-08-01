@@ -607,61 +607,6 @@ img { max-width: 100%; display: block; }
 .shadow-soft { box-shadow: 0 10px 40px -14px rgba(0,0,0,0.55); }
 .shadow-glow { box-shadow: var(--shadow-glow); }
 .blur-bg { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-/* Premium Founder Tag */
-.founder-tag{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    z-index:9999;
-
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-
-    padding:12px 18px;
-
-    background:rgba(12,18,35,.78);
-    backdrop-filter:blur(16px);
-
-    border:1px solid rgba(0,170,255,.35);
-    border-radius:14px;
-
-    color:#fff;
-
-    box-shadow:0 0 30px rgba(0,170,255,.18);
-
-    transition:.35s ease;
-}
-
-.founder-tag:hover{
-    transform:translateY(-4px);
-    box-shadow:0 0 40px rgba(0,170,255,.45);
-}
-
-.founder-tag span{
-    font-size:11px;
-    color:#8ec5ff;
-    text-transform:uppercase;
-    letter-spacing:1.2px;
-}
-
-.founder-tag strong{
-    font-size:15px;
-    font-weight:700;
-    color:#ffffff;
-}
-
-@media(max-width:768px){
-    .founder-tag{
-        right:12px;
-        bottom:12px;
-        padding:10px 14px;
-    }
-
-    .founder-tag strong{
-        font-size:13px;
-    }
-}
 /* ===============================
    Founder Badge
    =============================== */
@@ -709,7 +654,7 @@ img { max-width: 100%; display: block; }
     color:#ffffff;
     font-weight:700;
 }
-
+box-shadow: 0 0 40px rgba(59,130,246,.35);
 /* Mobile */
 @media (max-width:768px){
     .founder-badge{
@@ -717,5 +662,5 @@ img { max-width: 100%; display: block; }
         right:15px;
         padding:8px 14px;
         font-size:12px;
-    }
+    }background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
 }
