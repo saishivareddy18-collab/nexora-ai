@@ -1101,6 +1101,57 @@ gap:20px;
     color:var(--muted);
     margin-bottom:35px;
 }
+/* ==========================================
+WHY CHOOSE NEXORA AI
+========================================== */
+
+.why-us{
+    padding:100px 30px;
+}
+
+.why-grid{
+    max-width:1200px;
+    margin:60px auto 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.why-card{
+    padding:35px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    transition:.35s;
+    backdrop-filter:blur(18px);
+}
+
+.why-card:hover{
+    transform:translateY(-10px);
+    border-color:#4f7cff;
+    box-shadow:0 25px 60px rgba(79,124,255,.20);
+}
+
+.why-icon{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.why-card h3{
+    font-size:24px;
+    margin-bottom:15px;
+}
+
+.why-card p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+@media(max-width:900px){
+    .why-grid{
+        grid-template-columns:1fr;
+    }
+}
 
 /* ================= FOOTER ================= */
 
@@ -1680,3 +1731,62 @@ font-size:30px;
 }
 
    }
+<!-- =========================
+WHY CHOOSE NEXORA AI
+========================= -->
+
+<section class="why-us">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Why Choose <span>Nexora AI</span>
+        </h2>
+
+        <p class="section-subtitle">
+            Built for speed, security, intelligence, and productivity.
+        </p>
+
+        <div class="why-grid">
+
+            <div class="why-card">
+                <div class="why-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Get intelligent responses within seconds using powerful AI models.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your conversations are protected with modern security practices.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">🤖</div>
+                <h3>Advanced AI</h3>
+                <p>Write, code, research, summarize documents, and solve problems.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">🌍</div>
+                <h3>Available Everywhere</h3>
+                <p>Access Nexora AI from desktop, tablet, or mobile anytime.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">📈</div>
+                <h3>Boost Productivity</h3>
+                <p>Automate repetitive tasks and focus on what matters most.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="why-icon">🚀</div>
+                <h3>Future Ready</h3>
+                <p>Constantly improving with new AI capabilities and updates.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
