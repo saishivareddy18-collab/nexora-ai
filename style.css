@@ -2159,3 +2159,64 @@ color:var(--muted);
 line-height:1.8;
 display:none;
 }
+/* ==========================================
+FINAL CTA
+========================================== */
+
+.final-cta{
+    padding:120px 30px;
+}
+
+.cta-box{
+    max-width:1000px;
+    margin:auto;
+    text-align:center;
+    padding:70px 50px;
+    border-radius:32px;
+    background:linear-gradient(
+        135deg,
+        rgba(79,124,255,.15),
+        rgba(124,58,237,.15)
+    );
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(20px);
+    box-shadow:0 30px 80px rgba(79,124,255,.25);
+}
+
+.cta-box h2{
+    font-size:52px;
+    margin-bottom:20px;
+}
+
+.cta-box span{
+    background:linear-gradient(90deg,#4f7cff,#00d4ff,#7c3aed);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.cta-box p{
+    max-width:700px;
+    margin:0 auto 40px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:18px;
+}
+
+.cta-buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+@media(max-width:768px){
+
+    .cta-box{
+        padding:45px 25px;
+    }
+
+    .cta-box h2{
+        font-size:36px;
+    }
+
+}
