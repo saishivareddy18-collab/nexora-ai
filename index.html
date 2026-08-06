@@ -1252,3 +1252,225 @@ Future team members will help design world-class AI experiences.
 </div>
 
 </section>
+<!-- =========================
+AI DASHBOARD
+========================= -->
+
+<section class="dashboard">
+
+<div class="container">
+
+<h2 class="section-title">
+Inside <span>Nexora AI</span>
+</h2>
+
+<p class="section-subtitle">
+A modern AI workspace designed for productivity.
+</p>
+
+<div class="dashboard-window">
+
+<div class="dashboard-sidebar">
+
+<div class="side-item active">💬 AI Chat</div>
+
+<div class="side-item">🧠 Research</div>
+
+<div class="side-item">💻 Coding</div>
+
+<div class="side-item">📄 Documents</div>
+
+<div class="side-item">⚙ Settings</div>
+
+</div>
+
+<div class="dashboard-main">
+
+<div class="chat-bubble ai">
+Hello 👋 I'm Nexora AI.
+How can I help you today?
+</div>
+
+<div class="chat-bubble user">
+Create a React landing page.
+</div>
+
+<div class="chat-bubble ai">
+Generating premium React project...
+✓ Hero Section
+✓ Features
+✓ Pricing
+✓ Responsive Design
+✓ Dark Theme
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+/* ===========================
+DASHBOARD
+=========================== */
+
+.dashboard{
+padding:100px 30px;
+}
+
+.dashboard-window{
+
+max-width:1200px;
+
+margin:auto;
+
+display:grid;
+
+grid-template-columns:280px 1fr;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:30px;
+
+overflow:hidden;
+
+backdrop-filter:blur(20px);
+
+}
+
+.dashboard-sidebar{
+
+padding:30px;
+
+background:rgba(255,255,255,.03);
+
+border-right:1px solid rgba(255,255,255,.08);
+
+}
+
+.side-item{
+
+padding:18px;
+
+border-radius:16px;
+
+margin-bottom:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.side-item:hover{
+
+background:rgba(79,124,255,.15);
+
+}
+
+.active{
+
+background:linear-gradient(135deg,#4f7cff,#7c3aed);
+
+}
+
+.dashboard-main{
+
+padding:40px;
+
+}
+
+.chat-bubble{
+
+padding:18px;
+
+margin-bottom:18px;
+
+border-radius:18px;
+
+max-width:75%;
+
+}
+
+.chat-bubble.ai{
+
+background:rgba(79,124,255,.12);
+
+}
+
+.chat-bubble.user{
+
+margin-left:auto;
+
+background:rgba(255,255,255,.08);
+
+}
+
+@media(max-width:900px){
+
+.dashboard-window{
+
+grid-template-columns:1fr;
+
+}
+
+.dashboard-sidebar{
+
+border-right:none;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+}
+<section class="dashboard" id="dashboard">
+
+<div class="container">
+
+<h2 class="section-title">
+Inside <span>Nexora AI</span>
+</h2>
+
+<p class="section-subtitle">
+Experience the future of AI with a clean and powerful workspace.
+</p>
+
+<div class="dashboard-window">
+
+<div class="dashboard-sidebar">
+
+<div class="side-item active">💬 AI Chat</div>
+<div class="side-item">💻 AI Coding</div>
+<div class="side-item">📄 Documents</div>
+<div class="side-item">🧠 Research</div>
+<div class="side-item">⚙ Settings</div>
+
+</div>
+
+<div class="dashboard-main">
+
+<div class="chat-bubble ai">
+👋 Hello! I'm Nexora AI. How can I help you today?
+</div>
+
+<div class="chat-bubble user">
+Build me a modern AI landing page.
+</div>
+
+<div class="chat-bubble ai">
+✅ Creating premium UI...<br>
+✅ Responsive design...<br>
+✅ AI animations...<br>
+✅ Deployment ready.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
