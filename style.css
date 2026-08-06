@@ -2121,3 +2121,41 @@ TRUSTED SECTION
         grid-template-columns:1fr;
     }
 }
+/* ==========================================
+FAQ
+========================================== */
+
+.faq{
+padding:100px 30px;
+}
+
+.faq-container{
+max-width:900px;
+margin:60px auto 0;
+}
+
+.faq-item{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:25px;
+margin-bottom:20px;
+transition:.3s;
+}
+
+.faq-item:hover{
+border-color:#4f7cff;
+box-shadow:0 15px 40px rgba(79,124,255,.15);
+}
+
+.faq-item h3{
+font-size:22px;
+margin-bottom:12px;
+cursor:pointer;
+}
+
+.faq-item p{
+color:var(--muted);
+line-height:1.8;
+display:none;
+}
