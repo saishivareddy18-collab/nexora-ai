@@ -791,3 +791,4 @@ Version 1.0
 `);
 
 console.log("🚀 Ready.");
+<script src="script.js"></script>
