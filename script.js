@@ -1,794 +1,348 @@
-/* ==========================================================
-   NEXORA AI
-   PREMIUM SCRIPT.JS — PART 1
-========================================================== */
+/* =========================================
+   NEXORA AI — PREMIUM INTERACTIONS
+   ========================================= */
 
-// Navbar
-const header = document.querySelector("header");
+document.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        header.style.background = "rgba(8,12,20,.92)";
-        header.style.backdropFilter = "blur(25px)";
-        header.style.boxShadow = "0 10px 30px rgba(0,0,0,.35)";
-    } else {
-        header.style.background = "rgba(8,12,20,.55)";
-        header.style.boxShadow = "none";
-    }
-});
+  /* -----------------------------------------
+     1. MOBILE NAVIGATION
+     ----------------------------------------- */
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+  const menuBtn = document.querySelector(".menu-toggle");
+  const navMenu = document.querySelector(".nav-links");
 
-    link.addEventListener("click", function(e){
-
-        const target = document.querySelector(this.getAttribute("href"));
-
-        if(target){
-
-            e.preventDefault();
-
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
-
-        }
-
+  if (menuBtn && navMenu) {
+    menuBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+      menuBtn.classList.toggle("active");
     });
 
-});
-
-// Scroll Reveal
-
-const observer = new IntersectionObserver((entries)=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show");
-
-}
-
-});
-
-},{threshold:.15});
-
-document.querySelectorAll(
-"section,.feature-card,.price-card,.testimonial,.use-card,.step,.stat"
-).forEach(el=>{
-
-el.classList.add("fade-up");
-
-observer.observe(el);
-
-});
-
-// Back To Top
-
-const topBtn=document.getElementById("topBtn");
-
-window.addEventListener("scroll",()=>{
-
-if(window.scrollY>500){
-
-topBtn.style.display="flex";
-
-topBtn.style.alignItems="center";
-
-topBtn.style.justifyContent="center";
-
-}else{
-
-topBtn.style.display="none";
-
-}
-
-});
-
-topBtn.onclick=()=>{
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-};
-
-// Active Nav
-
-const sections=document.querySelectorAll("section");
-
-const navLinks=document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll",()=>{
-
-let current="";
-
-sections.forEach(sec=>{
-
-const top=sec.offsetTop-120;
-
-const height=sec.clientHeight;
-
-if(pageYOffset>=top){
-
-current=sec.getAttribute("id");
-
-}
-
-});
-
-navLinks.forEach(link=>{
-
-link.classList.remove("active");
-
-if(link.getAttribute("href")==="#"+current){
-
-link.classList.add("active");
-
-}
-
-});
-
-});
-
-// Typing Effect
-
-const typing=document.querySelector(".typing");
-
-if(typing){
-
-setInterval(()=>{
-
-typing.style.opacity="0.4";
-
-setTimeout(()=>{
-
-typing.style.opacity="1";
-
-},500);
-
-},1000);
-
-}
-
-// Counter Animation
-
-const counters=document.querySelectorAll(".stat h2");
-
-let counted=false;
-
-window.addEventListener("scroll",()=>{
-
-if(counted) return;
-
-const stats=document.querySelector(".stats");
-
-if(!stats) return;
-
-const trigger=stats.offsetTop-500;
-
-if(window.scrollY>trigger){
-
-counted=true;
-
-counters.forEach(counter=>{
-
-const text=counter.innerText;
-
-const number=parseInt(text.replace(/\D/g,""))||0;
-
-const suffix=text.replace(/[0-9]/g,"");
-
-let value=0;
-
-const step=Math.max(1,Math.ceil(number/80));
-
-const timer=setInterval(()=>{
-
-value+=step;
-
-if(value>=number){
-
-value=number;
-
-clearInterval(timer);
-
-}
-
-counter.innerText=value+suffix;
-
-},20);
-
-});
-
-}
-
-});
-
-console.log("✅ Nexora AI Premium Script Loaded");
-/* ==========================================================
-   NEXORA AI
-   PREMIUM SCRIPT.JS — PART 2
-   FAQ • Mouse Glow • Parallax • Ripple • Floating Cards
-========================================================== */
-
-// FAQ Accordion
-document.querySelectorAll(".faq-item").forEach(item => {
-
-    const title = item.querySelector("h3");
-    const content = item.querySelector("p");
-
-    if (!title || !content) return;
-
-    content.style.display = "none";
-
-    title.style.cursor = "pointer";
-
-    title.addEventListener("click", () => {
-
-        const open = content.style.display === "block";
-
-        document.querySelectorAll(".faq-item p").forEach(p => {
-            p.style.display = "none";
+    navMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        menuBtn.classList.remove("active");
+      });
+    });
+  }
+
+
+  /* -----------------------------------------
+     2. SMOOTH SCROLL
+     ----------------------------------------- */
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+      const target = document.querySelector(this.getAttribute("href"));
+
+      if (target) {
+        e.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
         });
+      }
+    });
+  });
 
-        content.style.display = open ? "none" : "block";
+
+  /* -----------------------------------------
+     3. NAVBAR SCROLL EFFECT
+     ----------------------------------------- */
+
+  const navbar = document.querySelector("nav");
+
+  window.addEventListener("scroll", () => {
+    if (!navbar) return;
+
+    if (window.scrollY > 40) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  });
+
+
+  /* -----------------------------------------
+     4. SCROLL REVEAL ANIMATION
+     ----------------------------------------- */
+
+  const revealElements = document.querySelectorAll(
+    ".feature-card, .pricing-card, .hero-content, .section-title, .demo-container, .faq-item"
+  );
+
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12
+    }
+  );
+
+  revealElements.forEach(element => {
+    element.classList.add("reveal-hidden");
+    revealObserver.observe(element);
+  });
+
+
+  /* -----------------------------------------
+     5. AI DEMO
+     ----------------------------------------- */
+
+  const demoInput = document.querySelector("#ai-demo-input");
+  const demoButton = document.querySelector("#ai-demo-button");
+  const demoResponse = document.querySelector("#ai-demo-response");
+
+  if (demoInput && demoButton && demoResponse) {
+
+    demoButton.addEventListener("click", runDemo);
+
+    demoInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        runDemo();
+      }
+    });
+
+    function runDemo() {
+
+      const question = demoInput.value.trim();
+
+      if (!question) {
+        demoInput.focus();
+        return;
+      }
+
+      demoResponse.innerHTML = `
+        <div class="demo-user">
+          ${escapeHTML(question)}
+        </div>
+
+        <div class="demo-ai">
+          <span class="ai-dot"></span>
+          Nexora is thinking...
+        </div>
+      `;
+
+      setTimeout(() => {
+
+        demoResponse.innerHTML = `
+          <div class="demo-user">
+            ${escapeHTML(question)}
+          </div>
+
+          <div class="demo-ai">
+            <strong>Nexora AI</strong>
+            <p>
+              Great question. Nexora can help you analyze,
+              create, code and solve problems using AI.
+            </p>
+          </div>
+        `;
+
+      }, 900);
+    }
+  }
+
+
+  /* -----------------------------------------
+     6. PRICING TOGGLE
+     ----------------------------------------- */
+
+  const pricingToggle = document.querySelector("#pricing-toggle");
+
+  if (pricingToggle) {
+
+    pricingToggle.addEventListener("change", () => {
+
+      const prices = document.querySelectorAll("[data-monthly]");
+
+      prices.forEach(price => {
+
+        const monthly = price.dataset.monthly;
+        const yearly = price.dataset.yearly;
+
+        price.textContent = pricingToggle.checked
+          ? yearly
+          : monthly;
+
+      });
+
+    });
+  }
+
+
+  /* -----------------------------------------
+     7. FAQ ACCORDION
+     ----------------------------------------- */
+
+  document.querySelectorAll(".faq-question").forEach(question => {
+
+    question.addEventListener("click", () => {
+
+      const item = question.closest(".faq-item");
+
+      if (!item) return;
+
+      const alreadyOpen = item.classList.contains("active");
+
+      document.querySelectorAll(".faq-item").forEach(other => {
+        other.classList.remove("active");
+      });
+
+      if (!alreadyOpen) {
+        item.classList.add("active");
+      }
 
     });
 
-});
+  });
 
-// Mouse Glow
-const glow = document.createElement("div");
 
-glow.style.position = "fixed";
-glow.style.width = "250px";
-glow.style.height = "250px";
-glow.style.borderRadius = "50%";
-glow.style.pointerEvents = "none";
-glow.style.background = "radial-gradient(circle, rgba(79,124,255,.18), transparent 70%)";
-glow.style.filter = "blur(20px)";
-glow.style.zIndex = "-1";
+  /* -----------------------------------------
+     8. COPY BUTTON
+     ----------------------------------------- */
 
-document.body.appendChild(glow);
+  document.querySelectorAll("[data-copy]").forEach(button => {
 
-document.addEventListener("mousemove", e => {
+    button.addEventListener("click", async () => {
 
-    glow.style.left = (e.clientX - 125) + "px";
-    glow.style.top = (e.clientY - 125) + "px";
+      const text = button.dataset.copy;
 
-});
+      try {
 
-// Hero Parallax
+        await navigator.clipboard.writeText(text);
 
-const hero = document.querySelector(".hero");
+        const original = button.textContent;
 
-window.addEventListener("scroll", () => {
+        button.textContent = "Copied ✓";
 
-    if(hero){
+        setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
 
-        hero.style.transform =
-        `translateY(${window.scrollY*0.15}px)`;
+      } catch (error) {
+        console.log("Copy failed");
+      }
 
-    }
+    });
 
-});
+  });
 
-// Button Ripple
 
-document.querySelectorAll(".primary-btn,.secondary-btn")
-.forEach(btn=>{
+  /* -----------------------------------------
+     9. BUTTON RIPPLE EFFECT
+     ----------------------------------------- */
 
-btn.addEventListener("click",function(e){
+  document.querySelectorAll(
+    "button, .btn, .cta-button"
+  ).forEach(button => {
 
-const ripple=document.createElement("span");
+    button.addEventListener("click", function(e) {
 
-const size=Math.max(this.clientWidth,this.clientHeight);
+      const ripple = document.createElement("span");
 
-ripple.style.width=size+"px";
+      ripple.className = "ripple";
 
-ripple.style.height=size+"px";
+      const rect = this.getBoundingClientRect();
 
-ripple.style.position="absolute";
+      ripple.style.left = `${e.clientX - rect.left}px`;
+      ripple.style.top = `${e.clientY - rect.top}px`;
 
-ripple.style.borderRadius="50%";
+      this.appendChild(ripple);
 
-ripple.style.background="rgba(255,255,255,.35)";
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
 
-ripple.style.left=e.offsetX-size/2+"px";
+    });
 
-ripple.style.top=e.offsetY-size/2+"px";
+  });
 
-ripple.style.transform="scale(0)";
 
-ripple.style.transition=".6s";
+  /* -----------------------------------------
+     10. CURSOR GLOW
+     ----------------------------------------- */
 
-ripple.style.pointerEvents="none";
+  const cursorGlow = document.querySelector(".cursor-glow");
 
-this.style.position="relative";
+  if (cursorGlow && window.matchMedia("(pointer:fine)").matches) {
 
-this.style.overflow="hidden";
+    document.addEventListener("mousemove", e => {
 
-this.appendChild(ripple);
+      cursorGlow.style.transform =
+        `translate(${e.clientX}px, ${e.clientY}px)`;
 
-requestAnimationFrame(()=>{
+    });
 
-ripple.style.transform="scale(4)";
-ripple.style.opacity="0";
+  }
 
-});
 
-setTimeout(()=>{
+  /* -----------------------------------------
+     11. 3D CARD TILT
+     ----------------------------------------- */
 
-ripple.remove();
+  document.querySelectorAll(".tilt-card").forEach(card => {
 
-},600);
+    card.addEventListener("mousemove", e => {
 
-});
+      const rect = card.getBoundingClientRect();
 
-});
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-// Floating Cards
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
 
-document.querySelectorAll(
-".feature-card,.testimonial,.use-card,.price-card"
-).forEach((card,index)=>{
+      const rotateX =
+        ((y - centerY) / centerY) * -5;
 
-setInterval(()=>{
+      const rotateY =
+        ((x - centerX) / centerX) * 5;
 
-card.style.transform=
-`translateY(${Math.sin(Date.now()/1000+index)*5}px)`;
+      card.style.transform =
+        `perspective(900px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)
+         translateY(-5px)`;
 
-},40);
+    });
 
-});
+    card.addEventListener("mouseleave", () => {
 
-// Image Hover
+      card.style.transform =
+        "perspective(900px) rotateX(0) rotateY(0) translateY(0)";
 
-document.querySelectorAll("img").forEach(img=>{
+    });
 
-img.addEventListener("mouseenter",()=>{
+  });
 
-img.style.transform="scale(1.04)";
 
-});
+  /* -----------------------------------------
+     12. CURRENT YEAR
+     ----------------------------------------- */
 
-img.addEventListener("mouseleave",()=>{
+  document.querySelectorAll("[data-year]").forEach(element => {
+    element.textContent = new Date().getFullYear();
+  });
 
-img.style.transform="scale(1)";
 
-});
+  /* -----------------------------------------
+     13. ESCAPE USER INPUT
+     ----------------------------------------- */
 
-img.style.transition=".4s";
+  function escapeHTML(text) {
 
-});
+    const div = document.createElement("div");
 
-// Keyboard Shortcut
+    div.textContent = text;
 
-document.addEventListener("keydown",e=>{
-
-if(e.key==="/"){
-
-const input=document.querySelector("input");
-
-if(input){
-
-e.preventDefault();
-
-input.focus();
-
-}
-
-}
-
-});
-
-console.log("✅ Nexora Premium JS Part 2 Loaded");
-/* ==========================================================
-   NEXORA AI
-   PREMIUM SCRIPT.JS — PART 3
-   Particles • Loader • Cursor • Mobile Menu
-========================================================== */
-
-// ================= LOADER =================
-
-window.addEventListener("load",()=>{
-
-const loader=document.querySelector(".loader");
-
-if(loader){
-
-loader.style.opacity="0";
-
-setTimeout(()=>{
-
-loader.remove();
-
-},600);
-
-}
+    return div.innerHTML;
+  }
 
 });
-
-// ================= PARTICLES =================
-
-const particleContainer=document.createElement("div");
-
-particleContainer.style.position="fixed";
-particleContainer.style.inset="0";
-particleContainer.style.pointerEvents="none";
-particleContainer.style.zIndex="-2";
-
-document.body.appendChild(particleContainer);
-
-for(let i=0;i<45;i++){
-
-const p=document.createElement("div");
-
-p.style.position="absolute";
-p.style.width=Math.random()*4+2+"px";
-p.style.height=p.style.width;
-p.style.borderRadius="50%";
-p.style.background="rgba(79,124,255,.35)";
-
-p.style.left=Math.random()*100+"vw";
-p.style.top=Math.random()*100+"vh";
-
-particleContainer.appendChild(p);
-
-animateParticle(p);
-
-}
-
-function animateParticle(el){
-
-let x=Math.random()*window.innerWidth;
-let y=Math.random()*window.innerHeight;
-
-let dx=(Math.random()-.5)*.4;
-let dy=(Math.random()-.5)*.4;
-
-function move(){
-
-x+=dx;
-y+=dy;
-
-if(x<0||x>window.innerWidth) dx*=-1;
-if(y<0||y>window.innerHeight) dy*=-1;
-
-el.style.transform=`translate(${x}px,${y}px)`;
-
-requestAnimationFrame(move);
-
-}
-
-move();
-
-}
-
-// ================= CUSTOM CURSOR =================
-
-const cursor=document.createElement("div");
-
-cursor.style.width="18px";
-cursor.style.height="18px";
-cursor.style.border="2px solid #4f7cff";
-cursor.style.borderRadius="50%";
-cursor.style.position="fixed";
-cursor.style.pointerEvents="none";
-cursor.style.zIndex="9999";
-cursor.style.transition="transform .15s ease";
-
-document.body.appendChild(cursor);
-
-document.addEventListener("mousemove",e=>{
-
-cursor.style.left=e.clientX-9+"px";
-cursor.style.top=e.clientY-9+"px";
-
-});
-
-document.querySelectorAll("a,button").forEach(el=>{
-
-el.addEventListener("mouseenter",()=>{
-
-cursor.style.transform="scale(2)";
-
-});
-
-el.addEventListener("mouseleave",()=>{
-
-cursor.style.transform="scale(1)";
-
-});
-
-});
-
-// ================= MOBILE MENU =================
-
-const menu=document.createElement("div");
-
-menu.innerHTML="☰";
-
-menu.style.position="fixed";
-menu.style.top="22px";
-menu.style.right="20px";
-menu.style.fontSize="28px";
-menu.style.color="#fff";
-menu.style.cursor="pointer";
-menu.style.display="none";
-menu.style.zIndex="1000";
-
-document.body.appendChild(menu);
-
-const nav=document.querySelector(".nav-links");
-
-function checkMobile(){
-
-if(window.innerWidth<768){
-
-menu.style.display="block";
-
-}else{
-
-menu.style.display="none";
-
-if(nav){
-
-nav.style.display="flex";
-
-}
-
-}
-
-}
-
-checkMobile();
-
-window.addEventListener("resize",checkMobile);
-
-menu.onclick=()=>{
-
-if(!nav) return;
-
-if(nav.style.display==="flex"){
-
-nav.style.display="none";
-
-}else{
-
-nav.style.display="flex";
-nav.style.flexDirection="column";
-nav.style.position="absolute";
-nav.style.top="70px";
-nav.style.right="20px";
-nav.style.padding="20px";
-nav.style.borderRadius="18px";
-nav.style.background="rgba(10,15,30,.95)";
-
-}
-
-};
-
-// ================= RANDOM FLOAT =================
-
-setInterval(()=>{
-
-document.querySelectorAll(".glass-card").forEach(card=>{
-
-card.animate([
-
-{
-
-transform:"translateY(0px)"
-
-},
-
-{
-
-transform:"translateY(-8px)"
-
-},
-
-{
-
-transform:"translateY(0px)"
-
-}
-
-],{
-
-duration:3500,
-
-iterations:1
-
-});
-
-});
-
-},3500);
-
-console.log("✅ Nexora AI Premium JS Part 3 Loaded");
-/* ==========================================================
-   NEXORA AI
-   PREMIUM SCRIPT.JS — PART 4
-   Final Production Features
-========================================================== */
-
-// ================= PAGE PROGRESS =================
-
-const progress = document.createElement("div");
-
-progress.style.position = "fixed";
-progress.style.top = "0";
-progress.style.left = "0";
-progress.style.height = "4px";
-progress.style.width = "0%";
-progress.style.background = "linear-gradient(90deg,#4f7cff,#00d4ff,#7c3aed)";
-progress.style.zIndex = "99999";
-
-document.body.appendChild(progress);
-
-window.addEventListener("scroll", () => {
-
-    const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-
-    const percent =
-        (window.scrollY / height) * 100;
-
-    progress.style.width = percent + "%";
-
-});
-
-// ================= HERO TEXT ANIMATION =================
-
-const heroTitle = document.querySelector(".hero h1");
-
-if(heroTitle){
-
-heroTitle.animate([
-
-{
-opacity:.5,
-transform:"translateY(25px)"
-},
-
-{
-opacity:1,
-transform:"translateY(0)"
-}
-
-],{
-
-duration:1200,
-fill:"forwards"
-
-});
-
-}
-
-// ================= BUTTON HOVER =================
-
-document.querySelectorAll(".primary-btn,.secondary-btn")
-.forEach(btn=>{
-
-btn.addEventListener("mouseenter",()=>{
-
-btn.style.transform="translateY(-5px) scale(1.03)";
-
-});
-
-btn.addEventListener("mouseleave",()=>{
-
-btn.style.transform="translateY(0) scale(1)";
-
-});
-
-});
-
-// ================= AUTO CHAT =================
-
-const aiMessages=[
-
-"Generating response...",
-
-"Analyzing request...",
-
-"Searching knowledge...",
-
-"Optimizing answer...",
-
-"Done."
-
-];
-
-const ai=document.querySelector(".chat .ai:last-child");
-
-if(ai){
-
-let i=0;
-
-setInterval(()=>{
-
-ai.textContent=aiMessages[i];
-
-i++;
-
-if(i>=aiMessages.length){
-
-i=0;
-
-}
-
-},2500);
-
-}
-
-// ================= RANDOM GLOW =================
-
-setInterval(()=>{
-
-document.querySelectorAll(".feature-card").forEach(card=>{
-
-card.style.boxShadow=
-
-`0 20px 60px rgba(${Math.random()*100},
-124,
-255,
-.18)`;
-
-});
-
-},3000);
-
-// ================= PERFORMANCE =================
-
-window.addEventListener("resize",()=>{
-
-document.body.style.overflowX="hidden";
-
-});
-
-// ================= SHORTCUT =================
-
-document.addEventListener("keydown",e=>{
-
-if(e.key==="Escape"){
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-}
-
-});
-
-// ================= CONSOLE MESSAGE =================
-
-console.log(`
-========================================
-
-NEXORA AI
-
-Premium Landing Page Loaded
-
-Version 1.0
-
-========================================
-`);
-
-console.log("🚀 Ready.");
-<script src="script.js"></script>
