@@ -1,1475 +1,1755 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora AI | Intelligence For Everyone</title>
+<title>Nexora AI — The Intelligence Layer for Your Digital World</title>
+
+<meta name="description"
+content="Nexora AI brings intelligent tools for research, coding, writing, documents and automation into one powerful workspace.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#03040a;
+    color:#fff;
+    font-family:Inter,sans-serif;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+    --bg:#03040a;
+    --card:rgba(255,255,255,.045);
+    --border:rgba(255,255,255,.1);
+    --text:#fff;
+    --muted:#9298aa;
+    --purple:#8067ff;
+    --blue:#36a3ff;
+}
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    top:-250px;
+    left:-200px;
+    background:rgba(96,70,255,.14);
+    filter:blur(120px);
+    border-radius:50%;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    right:-200px;
+    top:500px;
+    background:rgba(0,150,255,.1);
+    filter:blur(120px);
+    border-radius:50%;
+    pointer-events:none;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:76px;
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 7%;
+
+    background:rgba(3,4,10,.65);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.logo{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:-1px;
+}
+
+.logo span{
+    color:#8b76ff;
+}
+
+.nav-links{
+    display:flex;
+    gap:32px;
+    color:#aeb3c2;
+    font-size:14px;
+}
+
+.nav-links a{
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:white;
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.login{
+    color:#b9bdc9;
+    font-size:14px;
+}
+
+.nav-button{
+    padding:11px 18px;
+    border-radius:10px;
+    background:white;
+    color:#050509;
+    font-weight:600;
+    font-size:13px;
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    min-height:100vh;
+    padding:150px 7% 80px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+
+    position:relative;
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 13px;
+
+    border:1px solid rgba(128,103,255,.3);
+    background:rgba(128,103,255,.08);
+
+    border-radius:50px;
+
+    color:#b7aaff;
+    font-size:12px;
+
+    margin-bottom:25px;
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    background:#8b76ff;
+    border-radius:50%;
+    box-shadow:0 0 12px #8067ff;
+}
+
+.hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:clamp(50px,6vw,86px);
+    line-height:.98;
+    letter-spacing:-4px;
+    max-width:850px;
+}
+
+.gradient{
+    background:linear-gradient(
+        100deg,
+        #fff,
+        #9f91ff,
+        #57b7ff
+    );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero-description{
+    max-width:600px;
+    color:#969cac;
+    font-size:18px;
+    line-height:1.7;
+    margin-top:28px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:14px;
+    margin-top:35px;
+}
+
+.primary-btn{
+    padding:15px 24px;
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #8067ff,
+        #4f7dff
+    );
+
+    color:white;
+    font-weight:600;
+
+    box-shadow:
+        0 0 30px rgba(128,103,255,.2);
+
+    transition:.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 10px 40px rgba(128,103,255,.35);
+}
+
+.secondary-btn{
+    padding:15px 24px;
+    border-radius:12px;
+
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+
+    color:#ddd;
+
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.hero-note{
+    margin-top:18px;
+    color:#626878;
+    font-size:12px;
+}
+
+/* =====================================================
+   3D
+===================================================== */
+
+#three-container{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+}
+
+.hero-visual{
+    height:600px;
+    position:relative;
+}
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+section{
+    position:relative;
+    z-index:3;
+    padding:120px 7%;
+}
+
+.section-label{
+    color:#8874ff;
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.section-title{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:clamp(36px,5vw,60px);
+    letter-spacing:-2px;
+    max-width:750px;
+}
+
+.section-description{
+    color:#858b9d;
+    max-width:650px;
+    line-height:1.7;
+    margin-top:18px;
+}
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+.features-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:55px;
+}
+
+.feature{
+    padding:30px;
+    min-height:260px;
+
+    border:1px solid var(--border);
+    border-radius:20px;
+
+    background:var(--card);
+
+    backdrop-filter:blur(20px);
+
+    transition:.4s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.feature::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-70px;
+    bottom:-70px;
+
+    background:#7560ff;
+    opacity:.08;
+    filter:blur(40px);
+    border-radius:50%;
+}
+
+.feature:hover{
+    transform:translateY(-7px);
+    border-color:rgba(128,103,255,.4);
+}
+
+.feature-number{
+    font-size:12px;
+    color:#676d80;
+}
+
+.feature h3{
+    margin-top:45px;
+    font-family:"Space Grotesk",sans-serif;
+    font-size:22px;
+}
+
+.feature p{
+    color:#858b9d;
+    margin-top:12px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* =====================================================
+   SHOWCASE
+===================================================== */
+
+.showcase{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.showcase-card{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
+    border-radius:24px;
+    padding:30px;
+    min-height:390px;
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.05);
+}
+
+.chat-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--border);
+}
+
+.chat-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#8067ff;
+}
+
+.chat-title{
+    font-size:13px;
+    color:#aaa;
+}
+
+.message{
+    margin-top:30px;
+    padding:18px;
+    border-radius:15px;
+    background:rgba(255,255,255,.04);
+    color:#a8adbb;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.message.ai{
+    border-left:2px solid #8067ff;
+}
+
+/* =====================================================
+   PROCESS
+===================================================== */
+
+.process{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:55px;
+}
+
+.process-item{
+    padding:30px;
+    border-top:1px solid var(--border);
+}
+
+.process-number{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:40px;
+    color:#514c6c;
+}
+
+.process h3{
+    margin-top:25px;
+    font-size:20px;
+}
+
+.process p{
+    color:#7f8596;
+    line-height:1.6;
+    margin-top:12px;
+    font-size:14px;
+}
+
+/* =====================================================
+   USE CASES
+===================================================== */
+
+.usecases{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:40px;
+}
+
+.usecase{
+    padding:14px 20px;
+    border-radius:50px;
+    border:1px solid var(--border);
+    color:#a8adba;
+    background:rgba(255,255,255,.03);
+    transition:.3s;
+}
+
+.usecase:hover{
+    color:white;
+    border-color:#8067ff;
+}
+
+/* =====================================================
+   PRICING
+===================================================== */
+
+.pricing{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    max-width:850px;
+    margin:55px auto 0;
+}
+
+.price-card{
+    padding:35px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:rgba(255,255,255,.035);
+}
+
+.price-card.pro{
+    border-color:rgba(128,103,255,.5);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(128,103,255,.12),
+            rgba(255,255,255,.03)
+        );
+}
+
+.price-card h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:24px;
+}
+
+.price{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:45px;
+    margin:20px 0;
+}
+
+.price span{
+    color:#777d8e;
+    font-size:14px;
+}
+
+.price-list{
+    list-style:none;
+    color:#8c92a2;
+    line-height:2.4;
+    font-size:14px;
+}
+
+.price-list li::before{
+    content:"✓";
+    color:#8b76ff;
+    margin-right:10px;
+}
+
+/* =====================================================
+   FAQ
+===================================================== */
+
+.faq{
+    max-width:850px;
+    margin:50px auto 0;
+}
+
+.faq-item{
+    border-bottom:1px solid var(--border);
+}
+
+.faq-question{
+    padding:24px 0;
+    cursor:pointer;
+
+    display:flex;
+    justify-content:space-between;
+
+    font-weight:600;
+}
+
+.faq-answer{
+    max-height:0;
+    overflow:hidden;
+    color:#858b9c;
+    line-height:1.7;
+    transition:.4s;
+}
+
+.faq-item.active .faq-answer{
+    max-height:150px;
+    padding-bottom:22px;
+}
+
+.faq-icon{
+    color:#777;
+}
+
+/* =====================================================
+   CTA
+===================================================== */
+
+.cta{
+    text-align:center;
+    padding:150px 20px;
+}
+
+.cta h2{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:clamp(42px,6vw,75px);
+    letter-spacing:-3px;
+    max-width:850px;
+    margin:auto;
+}
+
+.cta p{
+    color:#818798;
+    max-width:600px;
+    margin:25px auto;
+    line-height:1.7;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    border-top:1px solid var(--border);
+    padding:35px 7%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:#656b7a;
+    font-size:13px;
+}
+
+.footer-links{
+    display:flex;
+    gap:25px;
+}
+
+.footer-links a:hover{
+    color:white;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:900px){
+
+    .nav-links,
+    .login{
+        display:none;
+    }
+
+    .hero{
+        display:block;
+        padding-top:140px;
+    }
+
+    .hero h1{
+        font-size:52px;
+        letter-spacing:-3px;
+    }
+
+    .hero-description{
+        font-size:16px;
+    }
+
+    .hero-visual{
+        height:420px;
+        margin-top:-30px;
+    }
+
+    .features-grid{
+        grid-template-columns:1fr;
+    }
+
+    .showcase{
+        grid-template-columns:1fr;
+    }
+
+    .process{
+        grid-template-columns:1fr;
+    }
+
+    .pricing{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding:90px 6%;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:20px;
+    }
+}
+
+@media(max-width:500px){
+
+    .navbar{
+        padding:0 5%;
+    }
+
+    .nav-button{
+        padding:9px 13px;
+    }
+
+    .hero{
+        padding-left:6%;
+        padding-right:6%;
+    }
+
+    .hero h1{
+        font-size:44px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        text-align:center;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="bg-blur one"></div>
-<div class="bg-blur two"></div>
-
-<header>
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
 <nav class="navbar">
 
-<a href="#" class="logo">
-NEXORA<span>AI</span>
-</a>
+    <a href="#" class="logo">
+        Nexora<span>AI</span>
+    </a>
 
-<ul class="nav-links">
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#usecases">Use cases</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+    </div>
 
-<li><a href="#features">Features</a></li>
-
-<li><a href="#solutions">Solutions</a></li>
-
-<li><a href="#pricing">Pricing</a></li>
-
-<li><a href="#about">About</a></li>
-
-</ul>
-
-<div class="nav-buttons">
-
-<a href="#" class="login-btn">
-Sign In
-</a>
-
-<a href="#" class="primary-btn">
-Get Started
-</a>
-
-</div>
+    <div class="nav-actions">
+        <a href="#" class="login">Sign in</a>
+        <a href="#pricing" class="nav-button">
+            Get Started
+        </a>
+    </div>
 
 </nav>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="hero">
+
+    <div id="three-container"></div>
+
+    <div class="hero-content">
+
+        <div class="badge">
+            <span class="badge-dot"></span>
+            The next generation of AI
+        </div>
+
+        <h1>
+            The Intelligence Layer
+            <span class="gradient">
+                for Your Digital World.
+            </span>
+        </h1>
+
+        <p class="hero-description">
+            Nexora AI brings powerful intelligence into one
+            workspace — helping you research ideas, write
+            content, build software, understand documents,
+            and turn ideas into action.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#pricing" class="primary-btn">
+                Start Building Free →
+            </a>
+
+            <a href="#features" class="secondary-btn">
+                Explore Nexora
+            </a>
+
+        </div>
+
+        <p class="hero-note">
+            No credit card required · Built for creators,
+            developers, students & businesses
+        </p>
+
+    </div>
+
+    <div class="hero-visual"></div>
+
 </header>
 
-<section class="hero">
 
-<div class="hero-content">
+<!-- =====================================================
+     FEATURES
+===================================================== -->
 
-<p class="hero-badge">
-✨ Trusted by Developers, Students & Businesses
-</p>
+<section id="features">
 
-<h1>
+    <div class="section-label">
+        Capabilities
+    </div>
 
-The Future of
-<span>Artificial Intelligence</span>
+    <h2 class="section-title">
+        One AI. Limitless possibilities.
+    </h2>
 
-Starts Here.
+    <p class="section-description">
+        Everything you need to think faster, create better,
+        and get more done — in one intelligent workspace.
+    </p>
 
-</h1>
 
-<p class="hero-text">
+    <div class="features-grid">
 
-Chat, code, research, write, analyze documents and automate your workflow with one powerful AI assistant.
+        <div class="feature">
 
-</p>
+            <span class="feature-number">01</span>
 
-<div class="hero-buttons">
+            <h3>AI Chat</h3>
 
-<a href="#" class="primary-btn">
-Start Free
-</a>
+            <p>
+                Ask questions, explore ideas and get
+                contextual answers that move your work forward.
+            </p>
 
-<a href="#" class="secondary-btn">
-Watch Demo
-</a>
+        </div>
 
-</div>
 
-<div class="hero-stats">
+        <div class="feature">
 
-<div>
+            <span class="feature-number">02</span>
 
-<h2>100K+</h2>
+            <h3>AI Coding</h3>
 
-<p>Users</p>
+            <p>
+                Generate code, debug problems, understand
+                complex systems and build software faster.
+            </p>
 
-</div>
+        </div>
 
-<div>
 
-<h2>99.9%</h2>
+        <div class="feature">
 
-<p>Uptime</p>
+            <span class="feature-number">03</span>
 
-</div>
+            <h3>AI Writing</h3>
 
-<div>
+            <p>
+                Turn rough ideas into polished emails,
+                reports, articles, scripts and content.
+            </p>
 
-<h2>24/7</h2>
+        </div>
 
-<p>AI Available</p>
 
-</div>
+        <div class="feature">
 
-</div>
+            <span class="feature-number">04</span>
 
-</div>
+            <h3>Document Intelligence</h3>
 
-<div class="hero-image">
+            <p>
+                Upload documents and let Nexora extract,
+                understand and summarize important information.
+            </p>
 
-<div class="glass-card">
+        </div>
 
-<div class="card-top">
 
-<div class="dot red"></div>
+        <div class="feature">
 
-<div class="dot yellow"></div>
+            <span class="feature-number">05</span>
 
-<div class="dot green"></div>
+            <h3>Research</h3>
 
-</div>
+            <p>
+                Explore complex topics and transform
+                information into useful insights.
+            </p>
 
-<div class="chat">
+        </div>
 
-<div class="ai">
-👋 Hello! I'm Nexora AI.
-How can I help today?
-</div>
 
-<div class="user">
-Build a startup website.
-</div>
+        <div class="feature">
 
-<div class="ai">
-Creating a premium AI landing page...
-</div>
+            <span class="feature-number">06</span>
 
-</div>
+            <h3>Automation</h3>
 
-</div>
+            <p>
+                Reduce repetitive work and create smarter
+                workflows powered by AI.
+            </p>
 
-</div>
-
-</section>
-
-</body>
-
-</html>
-<!-- =======================
-     TRUSTED BY
-======================= -->
-
-<section class="trusted">
-
-    <p>Trusted by innovators around the world</p>
-
-    <div class="trusted-grid">
-
-        <div class="brand">OPENAI</div>
-
-        <div class="brand">MICROSOFT</div>
-
-        <div class="brand">GOOGLE</div>
-
-        <div class="brand">GITHUB</div>
-
-        <div class="brand">NVIDIA</div>
-
-        <div class="brand">AWS</div>
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- =======================
-     FEATURES
-======================= -->
+<!-- =====================================================
+     SHOWCASE
+===================================================== -->
 
-<section class="features" id="features">
+<section>
 
-<h2 class="section-title">
+    <div class="showcase">
 
-Everything You Need
-<span>Powered By AI</span>
+        <div>
 
-</h2>
+            <div class="section-label">
+                Intelligence
+            </div>
 
-<p class="section-subtitle">
+            <h2 class="section-title">
+                More than a chatbot.
+            </h2>
 
-One intelligent platform for chat, coding, writing,
-research, automation and productivity.
+            <p class="section-description">
+                Nexora is designed to become an intelligent
+                layer between you, your information and the
+                tools you use every day.
+            </p>
 
-</p>
+            <br>
 
-<div class="feature-grid">
+            <p class="section-description">
+                Ask a question. Upload a document. Write code.
+                Explore an idea. Build something new.
+            </p>
 
-<div class="feature-card">
+        </div>
 
-<div class="icon">🤖</div>
 
-<h3>AI Chat</h3>
+        <div class="showcase-card">
 
-<p>
+            <div class="chat-top">
 
-Fast conversational AI with human-like responses.
+                <span class="chat-dot"></span>
 
-</p>
+                <span class="chat-title">
+                    Nexora Intelligence
+                </span>
 
-</div>
+            </div>
 
-<div class="feature-card">
 
-<div class="icon">💻</div>
+            <div class="message">
 
-<h3>AI Coding</h3>
+                You:
+                <br><br>
 
-<p>
+                Help me turn this idea into a working product.
 
-Generate, debug and optimize code instantly.
+            </div>
 
-</p>
 
-</div>
+            <div class="message ai">
 
-<div class="feature-card">
+                Nexora:
+                <br><br>
 
-<div class="icon">📝</div>
+                Let's turn the idea into a plan.
+                I'll break it into product,
+                technology, launch and growth steps.
 
-<h3>AI Writing</h3>
+            </div>
 
-<p>
+        </div>
 
-Create blogs, emails, reports and content.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<div class="icon">📄</div>
-
-<h3>Document AI</h3>
-
-<p>
-
-Upload PDFs and receive smart summaries.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<div class="icon">🌍</div>
-
-<h3>Translation</h3>
-
-<p>
-
-Translate naturally into 100+ languages.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<div class="icon">⚡</div>
-
-<h3>Automation</h3>
-
-<p>
-
-Automate repetitive work with AI workflows.
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =======================
+<!-- =====================================================
      HOW IT WORKS
-======================= -->
+===================================================== -->
 
-<section class="how">
+<section id="how">
 
-<h2 class="section-title">
+    <div class="section-label">
+        Workflow
+    </div>
 
-How Nexora Works
+    <h2 class="section-title">
+        From idea to outcome.
+    </h2>
 
-</h2>
+    <div class="process">
 
-<div class="steps">
+        <div class="process-item">
 
-<div class="step">
+            <div class="process-number">
+                01
+            </div>
 
-<div class="number">01</div>
+            <h3>Tell Nexora</h3>
 
-<h3>Ask Anything</h3>
+            <p>
+                Ask a question, describe an idea,
+                upload a document or give Nexora a task.
+            </p>
 
-<p>
+        </div>
 
-Type your question or upload a document.
 
-</p>
+        <div class="process-item">
 
-</div>
+            <div class="process-number">
+                02
+            </div>
 
-<div class="step">
+            <h3>Nexora Understands</h3>
 
-<div class="number">02</div>
+            <p>
+                AI analyzes your request, context
+                and information to determine the best path.
+            </p>
 
-<h3>AI Understands</h3>
+        </div>
 
-<p>
 
-Advanced AI analyzes your request instantly.
+        <div class="process-item">
 
-</p>
+            <div class="process-number">
+                03
+            </div>
 
-</div>
+            <h3>Make It Happen</h3>
 
-<div class="step">
+            <p>
+                Get an answer, build something,
+                create content or automate the next step.
+            </p>
 
-<div class="number">03</div>
+        </div>
 
-<h3>Get Results</h3>
-
-<p>
-
-Receive fast, accurate and intelligent answers.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-     AI LIVE DEMO
-========================= -->
-
-<section class="demo" id="demo">
-
-<div class="demo-left">
-
-<span class="section-tag">
-Live AI Experience
-</span>
-
-<h2>
-Experience AI
-In Real Time
-</h2>
-
-<p>
-
-Ask questions, generate code, write articles,
-summarize PDFs and automate your workflow
-using one intelligent assistant.
-
-</p>
-
-<ul class="demo-list">
-
-<li>✓ Instant AI Responses</li>
-
-<li>✓ Code Generation</li>
-
-<li>✓ Smart Document Analysis</li>
-
-<li>✓ AI Writing Assistant</li>
-
-<li>✓ Multilingual Support</li>
-
-</ul>
-
-<a href="#" class="primary-btn">
-Try Nexora AI
-</a>
-
-</div>
-
-<div class="demo-right">
-
-<div class="chat-window">
-
-<div class="chat-header">
-
-<div class="circle red"></div>
-
-<div class="circle yellow"></div>
-
-<div class="circle green"></div>
-
-<span>Nexora AI Assistant</span>
-
-</div>
-
-<div class="message ai">
-👋 Hello! I'm Nexora AI.
-How can I help today?
-</div>
-
-<div class="message user">
-Build a professional AI startup website.
-</div>
-
-<div class="message ai">
-Creating a premium landing page with
-animations, pricing, testimonials,
-responsive design and modern UI...
-</div>
-
-<div class="message typing">
-
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =========================
-     STATISTICS
-========================= -->
-
-<section class="stats">
-
-<div class="stat">
-
-<h2>100K+</h2>
-
-<p>Active Users</p>
-
-</div>
-
-<div class="stat">
-
-<h2>50M+</h2>
-
-<p>AI Responses</p>
-
-</div>
-
-<div class="stat">
-
-<h2>99.99%</h2>
-
-<p>Reliability</p>
-
-</div>
-
-<div class="stat">
-
-<h2>150+</h2>
-
-<p>Countries</p>
-
-</div>
-
-</section>
-
-
-<!-- =========================
+<!-- =====================================================
      USE CASES
-========================= -->
+===================================================== -->
 
-<section class="usecases" id="solutions">
+<section id="usecases">
 
-<h2 class="section-title">
+    <div class="section-label">
+        Built for
+    </div>
 
-Built For Everyone
+    <h2 class="section-title">
+        One platform. Many possibilities.
+    </h2>
 
-</h2>
+    <p class="section-description">
+        Nexora can become an everyday intelligence layer
+        for people building, learning and working with AI.
+    </p>
 
-<div class="usecase-grid">
 
-<div class="use-card">
+    <div class="usecases">
 
-<h3>🎓 Students</h3>
+        <span class="usecase">Developers</span>
+        <span class="usecase">Students</span>
+        <span class="usecase">Creators</span>
+        <span class="usecase">Founders</span>
+        <span class="usecase">Businesses</span>
+        <span class="usecase">Researchers</span>
+        <span class="usecase">Designers</span>
+        <span class="usecase">Teams</span>
 
-<p>
-
-Study faster, summarize notes,
-solve problems and learn smarter.
-
-</p>
-
-</div>
-
-<div class="use-card">
-
-<h3>💻 Developers</h3>
-
-<p>
-
-Generate code, debug errors
-and build projects faster.
-
-</p>
-
-</div>
-
-<div class="use-card">
-
-<h3>🚀 Startups</h3>
-
-<p>
-
-Automate workflows, marketing
-and customer support.
-
-</p>
-
-</div>
-
-<div class="use-card">
-
-<h3>🏢 Businesses</h3>
-
-<p>
-
-Increase productivity with
-AI-powered automation.
-
-</p>
-
-</div>
-
-<div class="use-card">
-
-<h3>✍️ Content Creators</h3>
-
-<p>
-
-Generate blogs, captions,
-scripts and social content.
-
-</p>
-
-</div>
-
-<div class="use-card">
-
-<h3>📈 Teams</h3>
-
-<p>
-
-Collaborate and work smarter
-using intelligent AI tools.
-
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =========================
-     TESTIMONIALS
-========================= -->
+<!-- =====================================================
+     PRICING
+===================================================== -->
 
-<section class="testimonials">
+<section id="pricing">
 
-<h2 class="section-title">
+    <div style="text-align:center">
 
-Loved By Thousands
+        <div class="section-label">
+            Pricing
+        </div>
 
-</h2>
+        <h2 class="section-title" style="margin:auto">
+            Start free. Upgrade when you need more.
+        </h2>
 
-<div class="testimonial-grid">
+        <p class="section-description" style="margin:18px auto">
+            Simple pricing designed to let you experience
+            Nexora before committing.
+        </p>
 
-<div class="testimonial">
-
-<p>
-
-"Nexora AI completely transformed
-our workflow. Fast, beautiful
-and incredibly powerful."
-
-</p>
-
-<h4>— Alex Carter</h4>
-
-<span>Startup Founder</span>
-
-</div>
-
-<div class="testimonial">
-
-<p>
-
-"The cleanest AI platform I've used.
-Perfect for coding and research."
-
-</p>
-
-<h4>— Sarah Kim</h4>
-
-<span>Software Engineer</span>
-
-</div>
-
-<div class="testimonial">
-
-<p>
-
-"Professional design and
-lightning-fast responses.
-Highly recommended."
-
-</p>
-
-<h4>— Michael Lee</h4>
-
-<span>Product Designer</span>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-        PRICING
-========================= -->
-
-<section class="pricing" id="pricing">
-
-<h2 class="section-title">
-Simple Pricing
-<span>For Everyone</span>
-</h2>
-
-<div class="pricing-grid">
-
-<div class="price-card">
-
-<h3>Free</h3>
-
-<h1>$0</h1>
-
-<p>Forever Free</p>
-
-<ul>
-
-<li>✔ AI Chat</li>
-<li>✔ Basic Writing</li>
-<li>✔ Code Assistant</li>
-<li>✔ Community Support</li>
-
-</ul>
-
-<a href="#" class="secondary-btn">
-Get Started
-</a>
-
-</div>
+    </div>
 
 
-<div class="price-card featured">
+    <div class="pricing">
 
-<div class="popular">
-Most Popular
-</div>
+        <div class="price-card">
 
-<h3>Pro</h3>
+            <h3>Free</h3>
 
-<h1>$19</h1>
+            <div class="price">
+                ₹0
+                <span>/ month</span>
+            </div>
 
-<p>per month</p>
+            <ul class="price-list">
 
-<ul>
+                <li>AI conversations</li>
+                <li>Basic writing tools</li>
+                <li>Basic coding assistance</li>
+                <li>Limited document analysis</li>
 
-<li>✔ Unlimited AI Chat</li>
-<li>✔ AI Coding</li>
-<li>✔ Image Generation</li>
-<li>✔ PDF Analysis</li>
-<li>✔ Voice Assistant</li>
-<li>✔ Priority Support</li>
+            </ul>
 
-</ul>
+            <br>
 
-<a href="#" class="primary-btn">
-Start Pro
-</a>
+            <a href="#" class="secondary-btn">
+                Start Free
+            </a>
 
-</div>
+        </div>
 
 
-<div class="price-card">
+        <div class="price-card pro">
 
-<h3>Enterprise</h3>
+            <h3>Pro</h3>
 
-<h1>Custom</h1>
+            <div class="price">
+                ₹499
+                <span>/ month</span>
+            </div>
 
-<p>Contact Sales</p>
+            <ul class="price-list">
 
-<ul>
+                <li>Higher AI usage</li>
+                <li>Advanced coding</li>
+                <li>Advanced document intelligence</li>
+                <li>Research tools</li>
+                <li>Priority access</li>
 
-<li>✔ Unlimited Everything</li>
-<li>✔ Team Workspace</li>
-<li>✔ API Access</li>
-<li>✔ Dedicated Support</li>
-<li>✔ Custom AI Models</li>
+            </ul>
 
-</ul>
+            <br>
 
-<a href="#" class="secondary-btn">
-Contact Us
-</a>
+            <a href="#" class="primary-btn">
+                Choose Pro
+            </a>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </section>
 
 
+<!-- =====================================================
+     FAQ
+===================================================== -->
 
-<!-- =========================
-        FAQ
-========================= -->
+<section id="faq">
 
-<section class="faq">
+    <div style="text-align:center">
 
-<h2 class="section-title">
-Frequently Asked Questions
-</h2>
+        <div class="section-label">
+            FAQ
+        </div>
 
-<div class="faq-item">
+        <h2 class="section-title" style="margin:auto">
+            Questions, answered.
+        </h2>
 
-<h3>What is Nexora AI?</h3>
+    </div>
 
-<p>
-Nexora AI is an all-in-one intelligent assistant for chat, coding,
-writing, research and productivity.
-</p>
 
-</div>
+    <div class="faq">
 
-<div class="faq-item">
+        <div class="faq-item">
 
-<h3>Is there a free plan?</h3>
+            <div class="faq-question">
+                What is Nexora AI?
+                <span class="faq-icon">+</span>
+            </div>
 
-<p>
-Yes. You can start using Nexora AI completely free.
-</p>
+            <div class="faq-answer">
+                Nexora AI is an intelligent workspace designed
+                to help people research, create, code,
+                understand information and automate work.
+            </div>
 
-</div>
+        </div>
 
-<div class="faq-item">
 
-<h3>Can I use Nexora for coding?</h3>
+        <div class="faq-item">
 
-<p>
-Absolutely. Nexora helps generate, explain and debug code.
-</p>
+            <div class="faq-question">
+                Is Nexora free?
+                <span class="faq-icon">+</span>
+            </div>
 
-</div>
+            <div class="faq-answer">
+                Nexora can offer a free tier with optional
+                paid plans for users who need higher limits
+                and advanced capabilities.
+            </div>
 
-<div class="faq-item">
+        </div>
 
-<h3>Is my data secure?</h3>
 
-<p>
-Your conversations are encrypted and handled securely.
-</p>
+        <div class="faq-item">
 
-</div>
+            <div class="faq-question">
+                Can developers use Nexora?
+                <span class="faq-icon">+</span>
+            </div>
+
+            <div class="faq-answer">
+                Yes. Nexora is designed to support developers
+                with coding, debugging, research and
+                software-building workflows.
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div class="faq-question">
+                What makes Nexora different?
+                <span class="faq-icon">+</span>
+            </div>
+
+            <div class="faq-answer">
+                The long-term vision is to move beyond
+                simple question-and-answer interactions
+                toward an AI layer that connects intelligence,
+                information and actions.
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-
-<!-- =========================
-        CTA
-========================= -->
+<!-- =====================================================
+     CTA
+===================================================== -->
 
 <section class="cta">
 
-<h2>
-Ready to Build with AI?
-</h2>
+    <h2>
+        Your ideas deserve
+        <span class="gradient">
+            more than a chatbox.
+        </span>
+    </h2>
 
-<p>
+    <p>
+        Build with AI. Learn with AI. Work with AI.
+        Start with an idea and let Nexora take it further.
+    </p>
 
-Join thousands of developers,
-students and businesses already
-using Nexora AI.
-
-</p>
-
-<a href="#" class="primary-btn">
-Start Free Today
-</a>
-
-</section>
-
-
-<!-- =========================
-FINAL CTA
-========================= -->
-
-<section class="final-cta" id="cta">
-
-<div class="container">
-
-<div class="cta-box">
-
-<h2>
-Ready to Experience <span>Nexora AI?</span>
-</h2>
-
-<p>
-Join the next generation of AI-powered productivity.
-Start building, learning, and creating with Nexora AI today.
-</p>
-
-<div class="cta-buttons">
-
-<a href="#chat" class="primary-btn">
-🚀 Try Nexora AI
-</a>
-
-<a href="#pricing" class="secondary-btn">
-View Pricing
-</a>
-
-</div>
-
-</div>
-
-</div>
+    <a href="#pricing" class="primary-btn">
+        Start Building Free →
+    </a>
 
 </section>
 
-<!-- =========================
-        FOOTER
-========================= -->
 
-<footer id="about">
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
-<div class="footer-grid">
+<footer>
 
-<div>
+    <div>
+        © 2026 Nexora AI. All rights reserved.
+    </div>
 
-<h2>NEXORA AI</h2>
+    <div class="footer-links">
 
-<p>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
 
-Building the future of artificial
-intelligence for everyone.
-
-</p>
-
-</div>
-
-<div>
-
-<h3>Product</h3>
-
-<a href="#">Features</a>
-
-<a href="#">Pricing</a>
-
-<a href="#">API</a>
-
-<a href="#">Updates</a>
-
-</div>
-
-<div>
-
-<h3>Company</h3>
-
-<a href="#">About</a>
-
-<a href="#">Careers</a>
-
-<a href="#">Blog</a>
-
-<a href="#">Contact</a>
-
-</div>
-
-<div>
-
-<h3>Legal</h3>
-
-<a href="#">Privacy</a>
-
-<a href="#">Terms</a>
-
-<a href="#">Security</a>
-
-<a href="#">Cookies</a>
-
-</div>
-
-</div>
-
-<div class="footer-bottom">
-
-<p>
-© 2026 Nexora AI. All Rights Reserved.
-</p>
-
-</div>
+    </div>
 
 </footer>
 
 
+<script>
 
-<!-- Back To Top -->
+/* =====================================================
+   FAQ
+===================================================== */
 
-<button id="topBtn">
+document.querySelectorAll(".faq-question")
+.forEach(question => {
 
-↑
+    question.addEventListener("click", () => {
 
-</button>
+        const item =
+            question.parentElement;
+
+        item.classList.toggle("active");
+
+        const icon =
+            question.querySelector(".faq-icon");
+
+        icon.textContent =
+            item.classList.contains("active")
+            ? "−"
+            : "+";
+
+    });
+
+});
 
 
+/* =====================================================
+   THREE.JS AI CORE
+===================================================== */
 
-<script src="script.js"></script>
+const scene =
+    new THREE.Scene();
+
+const camera =
+    new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth /
+        window.innerHeight,
+        0.1,
+        1000
+    );
+
+camera.position.z = 6;
+
+
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias:true,
+        alpha:true
+    });
+
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio,2)
+);
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+document
+    .getElementById("three-container")
+    .appendChild(renderer.domElement);
+
+
+/* CORE */
+
+const core =
+    new THREE.Group();
+
+scene.add(core);
+
+
+const geometry =
+    new THREE.IcosahedronGeometry(
+        1.35,
+        4
+    );
+
+
+const material =
+    new THREE.MeshPhysicalMaterial({
+
+        color:0x735cff,
+
+        emissive:0x26127d,
+
+        emissiveIntensity:2,
+
+        roughness:.15,
+
+        metalness:.35,
+
+        transparent:true,
+
+        opacity:.9
+
+    });
+
+
+const sphere =
+    new THREE.Mesh(
+        geometry,
+        material
+    );
+
+core.add(sphere);
+
+
+/* WIREFRAME */
+
+const wireGeometry =
+    new THREE.IcosahedronGeometry(
+        1.7,
+        2
+    );
+
+
+const wireMaterial =
+    new THREE.MeshBasicMaterial({
+
+        color:0x9b8cff,
+
+        wireframe:true,
+
+        transparent:true,
+
+        opacity:.25
+
+    });
+
+
+const wire =
+    new THREE.Mesh(
+        wireGeometry,
+        wireMaterial
+    );
+
+core.add(wire);
+
+
+/* RINGS */
+
+function createRing(
+    radius,
+    rotation
+){
+
+    const ringGeometry =
+        new THREE.TorusGeometry(
+            radius,
+            .012,
+            16,
+            150
+        );
+
+    const ringMaterial =
+        new THREE.MeshBasicMaterial({
+            color:0x8067ff,
+            transparent:true,
+            opacity:.65
+        });
+
+    const ring =
+        new THREE.Mesh(
+            ringGeometry,
+            ringMaterial
+        );
+
+    ring.rotation.x =
+        rotation;
+
+    core.add(ring);
+
+    return ring;
+}
+
+
+const ring1 =
+    createRing(
+        2,
+        Math.PI/2
+    );
+
+const ring2 =
+    createRing(
+        2.15,
+        .6
+    );
+
+const ring3 =
+    createRing(
+        1.9,
+        -.7
+    );
+
+
+/* PARTICLES */
+
+const count = 1500;
+
+const positions =
+    new Float32Array(
+        count * 3
+    );
+
+
+for(let i=0;i<count;i++){
+
+    const radius =
+        3 + Math.random()*7;
+
+    const theta =
+        Math.random()*Math.PI*2;
+
+    const phi =
+        Math.acos(
+            2*Math.random()-1
+        );
+
+    positions[i*3] =
+        radius *
+        Math.sin(phi) *
+        Math.cos(theta);
+
+    positions[i*3+1] =
+        radius *
+        Math.sin(phi) *
+        Math.sin(theta);
+
+    positions[i*3+2] =
+        radius *
+        Math.cos(phi);
+
+}
+
+
+const particleGeometry =
+    new THREE.BufferGeometry();
+
+particleGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(
+        positions,
+        3
+    )
+);
+
+
+const particleMaterial =
+    new THREE.PointsMaterial({
+
+        color:0x8875ff,
+
+        size:.025,
+
+        transparent:true,
+
+        opacity:.8
+
+    });
+
+
+const particles =
+    new THREE.Points(
+        particleGeometry,
+        particleMaterial
+    );
+
+scene.add(particles);
+
+
+/* LIGHT */
+
+const light =
+    new THREE.PointLight(
+        0x8067ff,
+        25,
+        20
+    );
+
+light.position.set(
+    0,
+    2,
+    4
+);
+
+scene.add(light);
+
+
+scene.add(
+    new THREE.AmbientLight(
+        0xffffff,
+        .8
+    )
+);
+
+
+/* MOUSE */
+
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener(
+    "mousemove",
+    e => {
+
+        mouseX =
+            (e.clientX /
+            window.innerWidth -
+            .5);
+
+        mouseY =
+            (e.clientY /
+            window.innerHeight -
+            .5);
+
+    }
+);
+
+
+/* ANIMATION */
+
+const clock =
+    new THREE.Clock();
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    const time =
+        clock.getElapsedTime();
+
+
+    core.rotation.y += .003;
+
+    core.rotation.x += .001;
+
+    wire.rotation.y -= .004;
+
+    ring1.rotation.z += .004;
+
+    ring2.rotation.x += .003;
+
+    ring3.rotation.y += .003;
+
+    particles.rotation.y += .0004;
+
+
+    sphere.position.y =
+        Math.sin(time*1.5)*.08;
+
+
+    camera.position.x +=
+        (mouseX*.45 -
+        camera.position.x)*.025;
+
+    camera.position.y +=
+        (-mouseY*.3 -
+        camera.position.y)*.025;
+
+
+    camera.lookAt(
+        0,0,0
+    );
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+animate();
+
+
+/* RESPONSIVE */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+    }
+);
+
+</script>
 
 </body>
-
-</html>
-<form id="chatForm">
-    <input id="userInput" type="text" placeholder="Ask Nexora AI...">
-    <button type="submit">Send</button>
-</form>
-
-<div id="chatBox"></div>
-<!-- ==========================================
-SEO META TAGS
-========================================== -->
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description" content="Nexora AI is a powerful AI assistant that helps you chat, write, code, research, summarize documents, and boost productivity with cutting-edge artificial intelligence.">
-
-<meta name="keywords" content="Nexora AI, AI Assistant, ChatGPT Alternative, Artificial Intelligence, AI Chatbot, AI Writing, AI Coding, AI Research">
-
-<meta name="author" content="Saishiva Reddy">
-
-<meta name="robots" content="index, follow">
-
-<meta name="theme-color" content="#0B1220">
-
-<link rel="canonical" href="https://nexora.is-a.dev/">
-
-<!-- Open Graph -->
-
-<meta property="og:type" content="website">
-
-<meta property="og:title" content="Nexora AI — Intelligence For Everyone">
-
-<meta property="og:description" content="Experience the next generation AI assistant for chat, coding, writing, research, and productivity.">
-
-<meta property="og:url" content="https://nexora.is-a.dev/">
-
-<meta property="og:site_name" content="Nexora AI">
-
-<meta property="og:image" content="https://nexora.is-a.dev/assets/og-image.png">
-
-<!-- Twitter -->
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="twitter:title" content="Nexora AI — Intelligence For Everyone">
-
-<meta name="twitter:description" content="Your all-in-one AI assistant for productivity, coding, writing, and research.">
-
-<meta name="twitter:image" content="https://nexora.is-a.dev/assets/og-image.png">
-
-<!-- Favicon -->
-
-<link rel="icon" type="image/png" href="assets/favicon.png">
-
-<!-- Structured Data -->
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"SoftwareApplication",
-  "name":"Nexora AI",
-  "applicationCategory":"BusinessApplication",
-  "operatingSystem":"Web",
-  "url":"https://nexora.is-a.dev/",
-  "description":"Nexora AI is an intelligent AI assistant for chat, coding, writing, research, and productivity.",
-  "creator":{
-    "@type":"Person",
-    "name":"Saishiva Reddy"
-  }
-}
-</script>
-...
-<!-- Testimonials -->
-
-<!-- Founder Section -->
-
-<!-- CTA -->
-
-<!-- Footer -->
-<!-- =========================
-AI CAPABILITIES
-========================= -->
-
-<section class="capabilities" id="capabilities">
-
-<div class="container">
-
-<h2 class="section-title">
-
-Powerful <span>AI Capabilities</span>
-
-</h2>
-
-<p class="section-subtitle">
-
-Everything you need in one intelligent AI platform.
-
-</p>
-
-<div class="capability-grid">
-
-<div class="capability-card">
-<div class="capability-icon">💬</div>
-<h3>AI Chat</h3>
-<p>Ask questions and receive intelligent answers instantly.</p>
-</div>
-
-<div class="capability-card">
-<div class="capability-icon">💻</div>
-<h3>AI Coding</h3>
-<p>Generate, debug and explain code in multiple programming languages.</p>
-</div>
-
-<div class="capability-card">
-<div class="capability-icon">✍️</div>
-<h3>AI Writing</h3>
-<p>Create blogs, emails, reports and social media content.</p>
-</div>
-
-<div class="capability-card">
-<div class="capability-icon">📄</div>
-<h3>Document Analysis</h3>
-<p>Summarize PDFs and extract important information.</p>
-</div>
-
-<div class="capability-card">
-<div class="capability-icon">🌐</div>
-<h3>Translation</h3>
-<p>Translate text into more than 100 languages.</p>
-</div>
-
-<div class="capability-card">
-<div class="capability-icon">🧠</div>
-<h3>Research Assistant</h3>
-<p>Analyze topics and generate detailed reports.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-INTEGRATIONS
-========================= -->
-
-<section class="integrations" id="integrations">
-
-<div class="container">
-
-<h2 class="section-title">
-Works With <span>Your Favorite Tools</span>
-</h2>
-
-<p class="section-subtitle">
-Connect Nexora AI with the apps you already use.
-</p>
-
-<div class="integration-grid">
-
-<div class="integration-card">
-<div class="integration-icon">💬</div>
-<h3>WhatsApp</h3>
-<p>Automate replies and customer conversations.</p>
-</div>
-
-<div class="integration-card">
-<div class="integration-icon">📧</div>
-<h3>Gmail</h3>
-<p>Draft, summarize and manage emails with AI.</p>
-</div>
-
-<div class="integration-card">
-<div class="integration-icon">💻</div>
-<h3>GitHub</h3>
-<p>Generate code, review pull requests and debug faster.</p>
-</div>
-
-<div class="integration-card">
-<div class="integration-icon">📄</div>
-<h3>Google Docs</h3>
-<p>Create and edit documents with AI assistance.</p>
-</div>
-
-<div class="integration-card">
-<div class="integration-icon">📊</div>
-<h3>Excel</h3>
-<p>Analyze spreadsheets and generate formulas.</p>
-</div>
-
-<div class="integration-card">
-<div class="integration-icon">☁️</div>
-<h3>Cloud Storage</h3>
-<p>Access your files securely from anywhere.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-ROADMAP
-========================= -->
-
-<section class="roadmap" id="roadmap">
-
-<div class="container">
-
-<h2 class="section-title">
-Nexora AI <span>Roadmap</span>
-</h2>
-
-<p class="section-subtitle">
-Our vision for building the next generation AI platform.
-</p>
-
-<div class="timeline">
-
-<div class="timeline-item completed">
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-<span class="timeline-date">2026 Q1</span>
-<h3>Launch</h3>
-<p>Official launch of Nexora AI with AI Chat and Writing Assistant.</p>
-</div>
-</div>
-
-<div class="timeline-item">
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-<span class="timeline-date">2026 Q2</span>
-<h3>AI Coding</h3>
-<p>Code generation, debugging, explanations, and project assistance.</p>
-</div>
-</div>
-
-<div class="timeline-item">
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-<span class="timeline-date">2026 Q3</span>
-<h3>Voice & Images</h3>
-<p>Voice conversations, image generation, and document analysis.</p>
-</div>
-</div>
-
-<div class="timeline-item">
-<div class="timeline-dot"></div>
-
-<div class="timeline-content">
-<span class="timeline-date">2026 Q4</span>
-<h3>Enterprise Platform</h3>
-<p>Teams, API access, enterprise security, and integrations.</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-TEAM
-========================= -->
-
-<section class="team" id="team">
-
-<div class="container">
-
-<h2 class="section-title">
-Meet the <span>Team</span>
-</h2>
-
-<p class="section-subtitle">
-The people building the future of Nexora AI.
-</p>
-
-<div class="team-grid">
-
-<div class="team-card">
-
-<div class="avatar">SR</div>
-
-<h3>Saishiva Reddy</h3>
-
-<p class="role">Founder & AI Developer</p>
-
-<p>
-Building intelligent AI products that help people learn, create, and work more efficiently.
-</p>
-
-</div>
-
-<div class="team-card">
-
-<div class="avatar">?</div>
-
-<h3>Open Position</h3>
-
-<p class="role">AI Engineer</p>
-
-<p>
-We're planning to grow our team with talented AI engineers and developers.
-</p>
-
-</div>
-
-<div class="team-card">
-
-<div class="avatar">?</div>
-
-<h3>Open Position</h3>
-
-<p class="role">UI/UX Designer</p>
-
-<p>
-Future team members will help design world-class AI experiences.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-AI DASHBOARD
-========================= -->
-
-<section class="dashboard">
-
-<div class="container">
-
-<h2 class="section-title">
-Inside <span>Nexora AI</span>
-</h2>
-
-<p class="section-subtitle">
-A modern AI workspace designed for productivity.
-</p>
-
-<div class="dashboard-window">
-
-<div class="dashboard-sidebar">
-
-<div class="side-item active">💬 AI Chat</div>
-
-<div class="side-item">🧠 Research</div>
-
-<div class="side-item">💻 Coding</div>
-
-<div class="side-item">📄 Documents</div>
-
-<div class="side-item">⚙ Settings</div>
-
-</div>
-
-<div class="dashboard-main">
-
-<div class="chat-bubble ai">
-Hello 👋 I'm Nexora AI.
-How can I help you today?
-</div>
-
-<div class="chat-bubble user">
-Create a React landing page.
-</div>
-
-<div class="chat-bubble ai">
-Generating premium React project...
-✓ Hero Section
-✓ Features
-✓ Pricing
-✓ Responsive Design
-✓ Dark Theme
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- =========================
-TRUST SECTION
-========================= -->
-
-<section class="trusted" id="trusted">
-
-<div class="container">
-
-<p class="trusted-title">
-Built for developers, students, startups and businesses
-</p>
-
-<div class="trusted-grid">
-
-<div class="trusted-card">
-<h3>⚡ Fast AI Responses</h3>
-<p>Designed for speed and productivity.</p>
-</div>
-
-<div class="trusted-card">
-<h3>🔒 Secure by Design</h3>
-<p>Privacy and security are core priorities.</p>
-</div>
-
-<div class="trusted-card">
-<h3>🌍 Web Based</h3>
-<p>Access Nexora AI from anywhere.</p>
-</div>
-
-<div class="trusted-card">
-<h3>🚀 Constantly Improving</h3>
-<p>New features and AI capabilities are added regularly.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- =========================
-FAQ
-========================= -->
-
-<section class="faq" id="faq">
-
-<div class="container">
-
-<h2 class="section-title">
-Frequently Asked <span>Questions</span>
-</h2>
-
-<p class="section-subtitle">
-Everything you need to know about Nexora AI.
-</p>
-
-<div class="faq-container">
-
-<div class="faq-item">
-<h3>What is Nexora AI?</h3>
-<p>Nexora AI is an intelligent assistant that helps with writing, coding, research, learning, and productivity.</p>
-</div>
-
-<div class="faq-item">
-<h3>Is Nexora AI free?</h3>
-<p>Yes. A free plan is available, with premium features planned for future releases.</p>
-</div>
-
-<div class="faq-item">
-<h3>Can Nexora AI generate code?</h3>
-<p>Yes. Nexora AI helps generate, explain, and debug code across multiple programming languages.</p>
-</div>
-
-<div class="faq-item">
-<h3>Is my data secure?</h3>
-<p>Protecting user privacy and security is a core goal. Features and policies will continue to evolve as the platform grows.</p>
-</div>
-
-<div class="faq-item">
-<h3>Which devices are supported?</h3>
-<p>Nexora AI works on modern desktop and mobile web browsers.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-<section class="dashboard" id="dashboard">
-  ...
-</section>
-<link rel="stylesheet" href="style.css">
-<meta name="description" content="Nexora AI - Build, learn and create with next generation AI tools. AI assistant for productivity, coding and creativity.">
-
-<meta name="keywords" content="AI assistant, AI startup, ChatGPT alternative, AI tools, Nexora AI">
-
-<meta name="author" content="Saishiva Reddy">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora AI</title>
-  
-  <!-- Add your sitemap link here -->
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-</head>
-<div class="stats">
-    <div class="stat">
-        <strong>AI-Powered</strong>
-        <span>Technology</span>
-    </div>
-
-    <div class="stat">
-        <strong>Multi-Use</strong>
-        <span>AI Assistant</span>
-    </div>
-
-    <div class="stat">
-        <strong>Built for</strong>
-        <span>Everyone</span>
-    </div>
-
-    <div class="stat">
-        <strong>Early</strong>
-        <span>Access</span>
-    </div>
-</div>
+     </html>
