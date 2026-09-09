@@ -346,3 +346,200 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+/* ==========================================
+   NEXORA AI AGENT DEMO
+========================================== */
+
+function useAgentExample(text) {
+  const input = document.getElementById("agentTask");
+
+  if (!input) return;
+
+  input.value = text;
+
+  input.focus();
+}
+
+
+async function runNexoraAgent() {
+
+  const input = document.getElementById("agentTask");
+  const progress = document.getElementById("agentProgress");
+  const result = document.getElementById("agentResult");
+
+  if (!input || !progress || !result) return;
+
+  const task = input.value.trim();
+
+  if (!task) {
+
+    input.focus();
+
+    result.innerHTML = `
+      <span>⚠</span>
+      <div>
+        <strong>Give Nexora a task first.</strong>
+        <p>Describe what you want Nexora to accomplish.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const steps = [
+    document.getElementById("agentStep1"),
+    document.getElementById("agentStep2"),
+    document.getElementById("agentStep3"),
+    document.getElementById("agentStep4")
+  ];
+
+
+  // Reset
+  steps.forEach(step => {
+    if (!step) return;
+
+    step.classList.remove("active");
+    step.classList.remove("completed");
+
+    const check = step.querySelector(".step-check");
+
+    if (check) {
+      check.textContent = "○";
+    }
+  });
+
+
+  progress.textContent = "Working...";
+
+
+  result.innerHTML = `
+    <span>✦</span>
+    <div>
+      <strong>Nexora is working...</strong>
+      <p>Analyzing your request.</p>
+    </div>
+  `;
+
+
+  // STEP 1
+  await activateAgentStep(
+    steps[0],
+    "Understanding your goal..."
+  );
+
+
+  // STEP 2
+  await activateAgentStep(
+    steps[1],
+    "Creating an execution plan..."
+  );
+
+
+  // STEP 3
+  await activateAgentStep(
+    steps[2],
+    "Executing the task..."
+  );
+
+
+  // STEP 4
+  await activateAgentStep(
+    steps[3],
+    "Preparing the final result..."
+  );
+
+
+  progress.textContent = "Complete";
+
+
+  result.innerHTML = `
+    <span>✓</span>
+    <div>
+      <strong>Task processed by Nexora.</strong>
+      <p>
+        Your request has been analyzed and the agent workflow is complete.
+      </p>
+    </div>
+  `;
+
+
+  /*
+   * CONNECT YOUR REAL BACKEND HERE
+   *
+   * Example:
+   *
+   * const response = await fetch(
+   *   "https://YOUR-RENDER-BACKEND.onrender.com/chat",
+   *   {
+   *     method: "POST",
+   *     headers: {
+   *       "Content-Type": "application/json"
+   *     },
+   *     body: JSON.stringify({
+   *       message: task
+   *     })
+   *   }
+   * );
+   *
+   * const data = await response.json();
+   *
+   * console.log(data);
+   *
+   */
+}
+
+
+function activateAgentStep(step, message) {
+
+  return new Promise(resolve => {
+
+    if (!step) {
+      resolve();
+      return;
+    }
+
+
+    const progress = document.getElementById("agentProgress");
+    const result = document.getElementById("agentResult");
+
+    step.classList.add("active");
+
+    const check = step.querySelector(".step-check");
+
+    if (check) {
+      check.textContent = "●";
+    }
+
+
+    if (progress) {
+      progress.textContent = message;
+    }
+
+
+    if (result) {
+      result.innerHTML = `
+        <span>✦</span>
+        <div>
+          <strong>${message}</strong>
+          <p>Nexora agent is working on your request.</p>
+        </div>
+      `;
+    }
+
+
+    setTimeout(() => {
+
+      step.classList.remove("active");
+      step.classList.add("completed");
+
+      if (check) {
+        check.textContent = "✓";
+      }
+
+      resolve();
+
+    }, 900);
+
+  });
+}
