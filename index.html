@@ -1753,3 +1753,132 @@ window.addEventListener(
 
 </body>
      </html>
+<!-- =========================
+     NEXORA AI AGENT DEMO
+========================= -->
+<section class="agent-demo" id="agent-demo">
+
+  <div class="agent-demo-header">
+    <span class="section-badge">✦ AI AGENT</span>
+
+    <h2>
+      Don't just ask AI.
+      <span>Let it get the work done.</span>
+    </h2>
+
+    <p>
+      Give Nexora a goal and watch it plan, reason, research,
+      and produce a result.
+    </p>
+  </div>
+
+  <div class="agent-container">
+
+    <!-- LEFT -->
+    <div class="agent-input-panel">
+
+      <div class="agent-panel-top">
+        <div>
+          <span class="agent-status-dot"></span>
+          Nexora Agent
+        </div>
+
+        <span class="agent-live">LIVE DEMO</span>
+      </div>
+
+      <label for="agentTask">What do you want Nexora to do?</label>
+
+      <textarea
+        id="agentTask"
+        placeholder="Example: Create a business plan for my AI startup..."
+      ></textarea>
+
+      <div class="agent-suggestions">
+        <button onclick="useAgentExample('Create a business plan for my AI startup')">
+          Business Plan
+        </button>
+
+        <button onclick="useAgentExample('Research the top AI competitors and compare them')">
+          Research
+        </button>
+
+        <button onclick="useAgentExample('Build a landing page for my startup')">
+          Build Website
+        </button>
+      </div>
+
+      <button class="run-agent-btn" onclick="runNexoraAgent()">
+        <span>Run with Nexora</span>
+        <span>→</span>
+      </button>
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="agent-process-panel">
+
+      <div class="agent-panel-top">
+        <span>Agent Activity</span>
+        <span id="agentProgress">Ready</span>
+      </div>
+
+      <div class="agent-steps">
+
+        <div class="agent-step" id="agentStep1">
+          <div class="step-icon">01</div>
+          <div>
+            <strong>Understand</strong>
+            <p>Understand your goal</p>
+          </div>
+          <span class="step-check">○</span>
+        </div>
+
+        <div class="agent-line"></div>
+
+        <div class="agent-step" id="agentStep2">
+          <div class="step-icon">02</div>
+          <div>
+            <strong>Plan</strong>
+            <p>Create the best execution plan</p>
+          </div>
+          <span class="step-check">○</span>
+        </div>
+
+        <div class="agent-line"></div>
+
+        <div class="agent-step" id="agentStep3">
+          <div class="step-icon">03</div>
+          <div>
+            <strong>Execute</strong>
+            <p>Work through the task</p>
+          </div>
+          <span class="step-check">○</span>
+        </div>
+
+        <div class="agent-line"></div>
+
+        <div class="agent-step" id="agentStep4">
+          <div class="step-icon">04</div>
+          <div>
+            <strong>Deliver</strong>
+            <p>Return your final result</p>
+          </div>
+          <span class="step-check">○</span>
+        </div>
+
+      </div>
+
+      <div class="agent-result" id="agentResult">
+        <span>✦</span>
+        <div>
+          <strong>Nexora is ready.</strong>
+          <p>Give it a task to see the agent workflow.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
