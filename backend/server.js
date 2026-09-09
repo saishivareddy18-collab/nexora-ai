@@ -42,3 +42,39 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const chatRoutes = require('./routes/chat');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGIN || '*',
+  methods: ['GET', 'POST'],
+}));
+
+app.use(express.json({ limit: '2mb' }));
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'nexora-agent-backend'
+  });
+});
+
+app.use('/api/chat', chatRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Nexora agent backend running on port ${PORT}`);
+});
