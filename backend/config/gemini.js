@@ -16,3 +16,5 @@ module.exports = {
   genAI,
   MODEL_NAME
 };
+npm install @google/genai
+const { genAI, MODEL_NAME } = require('../config/gemini');
