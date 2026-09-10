@@ -417,3 +417,731 @@
           (event.clientX /
             window.innerWidth -
             0.5)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Nexora AI — Intelligence Core</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #020307;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      position: relative;
+    }
+
+    /* =========================================
+       BACKGROUND
+       ========================================= */
+
+    .background {
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 50% 45%,
+          rgba(100, 105, 255, 0.10),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(80, 220, 200, 0.035),
+          transparent 48%
+        ),
+        #020307;
+
+      z-index: 0;
+    }
+
+    /* =========================================
+       GRID
+       ========================================= */
+
+    .grid {
+      position: fixed;
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 65px 65px;
+
+      mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 75%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 75%
+        );
+
+      z-index: 1;
+
+      pointer-events: none;
+    }
+
+    /* =========================================
+       3D CONTAINER
+       ========================================= */
+
+    #scene {
+      position: fixed;
+      inset: 0;
+
+      z-index: 2;
+
+      pointer-events: auto;
+    }
+
+    /* =========================================
+       UI
+       ========================================= */
+
+    .content {
+      position: fixed;
+
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%);
+
+      z-index: 5;
+
+      text-align: center;
+
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+
+      align-items: center;
+      gap: 8px;
+
+      padding: 8px 14px;
+
+      margin-bottom: 20px;
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.035);
+
+      color: #aeb5c7;
+
+      font-size: 12px;
+
+      backdrop-filter: blur(15px);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #5eead4;
+
+      box-shadow:
+        0 0 15px rgba(94,234,212,.7);
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 82px);
+
+      letter-spacing: -0.06em;
+
+      line-height: .95;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff,
+          #b8bdd0
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      -webkit-text-fill-color: transparent;
+
+      text-shadow:
+        0 20px 80px rgba(100,100,255,.15);
+    }
+
+    .subtitle {
+      margin-top: 18px;
+
+      color: #8c94a8;
+
+      font-size: 15px;
+
+      letter-spacing: .01em;
+    }
+
+    /* =========================================
+       CORNER INFO
+       ========================================= */
+
+    .corner {
+      position: fixed;
+
+      z-index: 6;
+
+      color: rgba(255,255,255,.35);
+
+      font-size: 10px;
+
+      letter-spacing: .16em;
+
+      text-transform: uppercase;
+    }
+
+    .top-left {
+      top: 28px;
+      left: 28px;
+    }
+
+    .top-right {
+      top: 28px;
+      right: 28px;
+    }
+
+    .bottom-left {
+      bottom: 28px;
+      left: 28px;
+    }
+
+    .bottom-right {
+      bottom: 28px;
+      right: 28px;
+    }
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 600px) {
+
+      .content {
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      .corner {
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background"></div>
+
+  <div class="grid"></div>
+
+  <div id="scene"></div>
+
+  <div class="content">
+
+    <div class="badge">
+      <span class="dot"></span>
+      NEXORA INTELLIGENCE CORE
+    </div>
+
+    <h1>
+      Think.<br>
+      Execute.
+    </h1>
+
+    <div class="subtitle">
+      An AI workspace built for the next generation.
+    </div>
+
+  </div>
+
+  <div class="corner top-left">
+    NEXORA / CORE
+  </div>
+
+  <div class="corner top-right">
+    SYSTEM ONLINE
+  </div>
+
+  <div class="corner bottom-left">
+    AI ENGINE
+  </div>
+
+  <div class="corner bottom-right">
+    2026
+  </div>
+
+
+  <!-- =========================================
+       THREE.JS
+       ========================================= -->
+
+  <script type="module">
+
+    import * as THREE from
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
+
+    /* =========================================
+       SCENE
+       ========================================= */
+
+    const scene =
+      new THREE.Scene();
+
+
+    /* =========================================
+       CAMERA
+       ========================================= */
+
+    const camera =
+      new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth /
+        window.innerHeight,
+        0.1,
+        100
+      );
+
+    camera.position.z = 7;
+
+
+    /* =========================================
+       RENDERER
+       ========================================= */
+
+    const renderer =
+      new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+      });
+
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio,
+        2
+      )
+    );
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+    renderer.outputColorSpace =
+      THREE.SRGBColorSpace;
+
+    document
+      .getElementById("scene")
+      .appendChild(renderer.domElement);
+
+
+    /* =========================================
+       CORE GROUP
+       ========================================= */
+
+    const core =
+      new THREE.Group();
+
+    scene.add(core);
+
+
+    /* =========================================
+       MAIN CORE
+       ========================================= */
+
+    const coreGeometry =
+      new THREE.IcosahedronGeometry(
+        1.35,
+        5
+      );
+
+    const coreMaterial =
+      new THREE.MeshBasicMaterial({
+        color: 0x8b8cff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.38
+      });
+
+    const coreMesh =
+      new THREE.Mesh(
+        coreGeometry,
+        coreMaterial
+      );
+
+    core.add(coreMesh);
+
+
+    /* =========================================
+       INNER CORE
+       ========================================= */
+
+    const innerGeometry =
+      new THREE.IcosahedronGeometry(
+        0.82,
+        3
+      );
+
+    const innerMaterial =
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.20
+      });
+
+    const inner =
+      new THREE.Mesh(
+        innerGeometry,
+        innerMaterial
+      );
+
+    core.add(inner);
+
+
+    /* =========================================
+       ORBIT RINGS
+       ========================================= */
+
+    const ringGroup =
+      new THREE.Group();
+
+    core.add(ringGroup);
+
+
+    function createRing(
+      radius,
+      rotationX,
+      rotationY,
+      rotationZ
+    ) {
+
+      const geometry =
+        new THREE.TorusGeometry(
+          radius,
+          0.008,
+          16,
+          160
+        );
+
+      const material =
+        new THREE.MeshBasicMaterial({
+          color: 0x777cff,
+          transparent: true,
+          opacity: 0.38
+        });
+
+      const ring =
+        new THREE.Mesh(
+          geometry,
+          material
+        );
+
+      ring.rotation.x =
+        rotationX;
+
+      ring.rotation.y =
+        rotationY;
+
+      ring.rotation.z =
+        rotationZ;
+
+      ringGroup.add(ring);
+
+      return ring;
+    }
+
+
+    const ring1 =
+      createRing(
+        1.75,
+        Math.PI / 2.5,
+        0.4,
+        0
+      );
+
+    const ring2 =
+      createRing(
+        1.95,
+        0.9,
+        -0.5,
+        0.5
+      );
+
+    const ring3 =
+      createRing(
+        1.55,
+        0.2,
+        1.2,
+        1
+      );
+
+
+    /* =========================================
+       PARTICLE FIELD
+       ========================================= */
+
+    const particleCount = 900;
+
+    const positions =
+      new Float32Array(
+        particleCount * 3
+      );
+
+    for (
+      let i = 0;
+      i < particleCount;
+      i++
+    ) {
+
+      const radius =
+        2.0 +
+        Math.random() * 2.8;
+
+      const theta =
+        Math.random() *
+        Math.PI * 2;
+
+      const phi =
+        Math.acos(
+          2 * Math.random() - 1
+        );
+
+      positions[i * 3] =
+        radius *
+        Math.sin(phi) *
+        Math.cos(theta);
+
+      positions[i * 3 + 1] =
+        radius *
+        Math.sin(phi) *
+        Math.sin(theta);
+
+      positions[i * 3 + 2] =
+        radius *
+        Math.cos(phi);
+    }
+
+
+    const particleGeometry =
+      new THREE.BufferGeometry();
+
+    particleGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(
+        positions,
+        3
+      )
+    );
+
+
+    const particleMaterial =
+      new THREE.PointsMaterial({
+
+        color: 0x9b9cff,
+
+        size: 0.018,
+
+        transparent: true,
+
+        opacity: 0.7,
+
+        depthWrite: false
+      });
+
+
+    const particles =
+      new THREE.Points(
+        particleGeometry,
+        particleMaterial
+      );
+
+    scene.add(particles);
+
+
+    /* =========================================
+       MOUSE
+       ========================================= */
+
+    const mouse = {
+      x: 0,
+      y: 0
+    };
+
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+
+        mouse.x =
+          (event.clientX /
+            window.innerWidth -
+            0.5);
+
+        mouse.y =
+          (event.clientY /
+            window.innerHeight -
+            0.5);
+
+      }
+    );
+
+
+    /* =========================================
+       ANIMATION
+       ========================================= */
+
+    const clock =
+      new THREE.Clock();
+
+
+    function animate() {
+
+      requestAnimationFrame(
+        animate
+      );
+
+      const time =
+        clock.getElapsedTime();
+
+
+      /* Core rotation */
+
+      core.rotation.y =
+        time * 0.16;
+
+      core.rotation.x =
+        Math.sin(time * 0.25)
+        * 0.08;
+
+
+      /* Inner rotation */
+
+      inner.rotation.y =
+        -time * 0.28;
+
+      inner.rotation.x =
+        time * 0.12;
+
+
+      /* Rings */
+
+      ring1.rotation.z =
+        time * 0.16;
+
+      ring2.rotation.x =
+        time * 0.12;
+
+      ring3.rotation.y =
+        -time * 0.18;
+
+
+      /* Particles */
+
+      particles.rotation.y =
+        time * 0.025;
+
+      particles.rotation.x =
+        Math.sin(time * 0.1)
+        * 0.05;
+
+
+      /* Mouse interaction */
+
+      core.rotation.y +=
+        mouse.x * 0.22;
+
+      core.rotation.x +=
+        mouse.y * 0.12;
+
+
+      /* Floating */
+
+      core.position.y =
+        Math.sin(time * 0.7)
+        * 0.08;
+
+
+      renderer.render(
+        scene,
+        camera
+      );
+    }
+
+
+    animate();
+
+
+    /* =========================================
+       RESIZE
+       ========================================= */
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        camera.aspect =
+          window.innerWidth /
+          window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+          window.innerWidth,
+          window.innerHeight
+        );
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
